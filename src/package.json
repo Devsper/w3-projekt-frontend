@@ -1,0 +1,19 @@
+{
+  "name": "timetracking",
+  "version": "1.0.0",
+  "description": "Application to keep track of employee work hours",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devsper/track-hours.git"
+  },
+  "author": "Jesper Freyschuss",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Devsper/track-hours/issues"
+  },
+  "homepage": "https://github.com/Devsper/track-hours#readme"
+}
