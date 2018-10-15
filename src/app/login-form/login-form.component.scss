@@ -1,0 +1,14 @@
+@import 'src/scss/styles';
+
+input.ng-invalid.ng-touched{
+    border: 2px solid $warningColor;
+}
+
+.danger{
+    display: block;
+    border: 1px solid $warningColor;
+    color: $warningColor;
+    background-color: lighten($warningColor, 50);
+    padding: 5px;
+    margin: 5px 0;
+}

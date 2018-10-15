@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Login Form</h1>
+  <!-- Makes Angular handle submitted form -->
+  <!-- # Creates a local reference to the HTML of the form -->
+  <div *ngIf="userLoggedIn"> INLOGGAD!!!! </div>
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <div class="form-group">
+      <label for="username">Användarnamn</label>
+      <input 
+      type="text" 
+      class="form-control" 
+      id="username" 
+      name="username" 
+      ngModel 
+      required
+      #nameCtrl="ngModel">
+      <span class="danger" *ngIf="nameCtrl.invalid && nameCtrl.touched">Var god och skriv in ditt användarnamn</span>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Lösenord</label>
+      <input 
+      type="password" 
+      class="form-control" 
+      id="password" 
+      name="password" 
+      ngModel 
+      required
+      #passCtrl="ngModel">
+      <span class="danger" *ngIf="passCtrl.invalid && passCtrl.touched">Var god och skriv in ditt lösenord</span>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="form.invalid">Logga in</button>
+
+  </form>
+</div>
