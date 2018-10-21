@@ -1,72 +1,63 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Task } from '../_models/task';
+import { Subtask } from '../_models/subtask';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  tasksFetched = new Subject<void>();
-  tasks: any;
+  //tasks: Task[];
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private router: Router) { }
 
-  private serverAPI = 'http://localhost/w3-projekt/app/api';
-  // getAllTasks(){
+  private serverUrl = 'http://localhost/w3-projekt/app';
+  
+  getTasks(){
 
-  //   let URL = this.serverAPI+"/task.php";
+    let getDataUrl = this.serverUrl+"/get_data.php";
 
-  //   // Sends GET-request to API
-  //   return this.http.get(URL).pipe(
-  //     map((response: Response) => {
-
-  //     // Restructure the data fetched from API
-  //     let data = response.json();
-  //     let decks = data;
-  //     console.log(data);
-  //     // Sends data to .subscribe()
-  //     return decks
-  //   })).subscribe((data) =>{
-
-  //     // Binds data from API to service variable
-  //     this.tasks = data;
-  //     // Makes subject emmit an event for subscribers that decks have been fetched
-  //     this.tasksFetched.next();
+    return this.http.get(getDataUrl, {
       
-  //   },(err) =>{
-  //     console.log(err);
-  //   });
-  // }
+      withCredentials: true,
+      observe: "response",
+      headers: new HttpHeaders({"Content-Type": "application/json"}), 
+      params: {getData: 'employeeTasks'}})
+              .pipe(
+                map((res: any) =>{
+                  
+                  let data = res.body.data;
+                  let distinctKeys = new Set(data.map(obj => obj.task));
+                  let tasks: Task[] = [];
 
-  getTask(id1, id2){
+                  distinctKeys.forEach(element => {
 
-    let URL = this.serverAPI+"/task.php?id1="+id1+"&id2="+id2;
+                    let task: Task = {
+                      "name": <string>element,
+                      "subtasks": []
+                    }
 
-    return this.http.get(URL).pipe(
-      map((response: Response) => {
+                    tasks.push(task);
+                  });
 
-      // Restructure the data fetched from API
-      let data = response.json();
-      let decks = data;
-      console.log(data);
-      // Sends data to .subscribe()
-      return decks
-    })).subscribe((data) =>{
+                  data.forEach(element => {
+                    
+                    // Creates subtask from fetched data
+                    let subtask: Subtask = { "name": element.subtask, "id": element.subtaskId };
+                    // Finds correct array to push subtask to
+                    let objectToPush: Task = tasks.find(obj => obj.name == element.task);
 
-      // Binds data from API to service variable
-      this.tasks = data;
-      // Makes subject emmit an event for subscribers that decks have been fetched
-      this.tasksFetched.next();
-      
-    },(err) =>{
-      console.log(err);
-    });
+                    objectToPush.subtasks.push(subtask);
+                  });
+
+                  return tasks;
+                })
+              );
   }
 }

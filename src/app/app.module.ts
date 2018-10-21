@@ -6,18 +6,22 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
-
-import { TaskService } from './_services/task.service';
-import { UserService } from './_services/user.service';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MainComponent } from './main/main.component';
+
+import { TaskService } from './_services/task.service';
+import { EmployeeService } from './_services/employee.service';
+import { ChooseAssignmentComponent } from './choose-assignment/choose-assignment.component';
+import { ChooseTaskComponent } from './choose-task/choose-task.component';
+
 
 const routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginFormComponent},
-  { path: 'user', component: MainComponent },
+  { path: 'user/choose-assignment', component: ChooseAssignmentComponent },
+  { path: 'user/choose-task', component: ChooseTaskComponent },
   { path: 'tasks', component: TasksComponent},
-  { path: 'tasks/:id/test/:id2', component: TasksComponent},
+  { path: 'tasks/:id/subtask/:id2', component: TasksComponent},
   { path: '**', redirectTo: 'login'}
 ];
 
@@ -26,7 +30,9 @@ const routes = [
     AppComponent,
     TasksComponent,
     LoginFormComponent,
-    MainComponent
+    MainComponent,
+    ChooseAssignmentComponent,
+    ChooseTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,7 @@ const routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [TaskService, UserService],
+  providers: [TaskService, EmployeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

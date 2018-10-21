@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from '../_services/user.service';
+import { EmployeeService } from '../_services/employee.service';
 
 @Component({
   selector: 'app-login-form',
@@ -10,17 +10,19 @@ import { UserService } from '../_services/user.service';
 })
 export class LoginFormComponent implements OnInit{
 
-  constructor(private userService: UserService,
+  username = "jefr";
+  password = "1234";
+
+  constructor(private employeeService: EmployeeService,
               private router: Router) { }
 
 
   ngOnInit() {
     
-    if(this.userService.checkLoginStatus()){
+    if(this.employeeService.checkLoginStatus()){
       this.router.navigate(['/user']);
     }
   }
-
 
   onSubmit(submittedForm){
 
@@ -31,6 +33,16 @@ export class LoginFormComponent implements OnInit{
     let username = submittedForm.value.username.toLowerCase();
     let password = submittedForm.value.password;
 
-    this.userService.login(username, password).subscribe();
+    this.employeeService.login(username, password).subscribe((redirectPath) =>{
+      
+      if(redirectPath == "assignments"){
+        this.router.navigate(['/user/choose-assignment']);
+      }
+
+      if(redirectPath == "tasks"){
+        this.router.navigate(['/user/choose-task']);
+      }
+
+    });
   }
 }

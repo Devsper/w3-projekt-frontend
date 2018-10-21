@@ -1,7 +1,8 @@
-export interface Task {
+import { Subtask } from '../_models/subtask';
 
-    id: number;
+export class Task {
+
+    id?: number;
     name: string;
-    createdDate: Date;
-    assignment_id: number;
+    subtasks?: Subtask[];
 }

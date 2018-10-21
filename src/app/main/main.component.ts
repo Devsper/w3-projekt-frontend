@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from '../_services/user.service';
+import { EmployeeService } from '../_services/employee.service';
 
 @Component({
   selector: 'app-main',
@@ -9,13 +9,13 @@ import { UserService } from '../_services/user.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.userService.isUserAllowed();
+    this.employeeService.isEmployeeAllowed();
   }
 
   onLogout(){
-    this.userService.logout();
+    this.employeeService.logout();
   }
 }
