@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AssignmentService } from '../_services/assignment.service';
 import { EmployeeService } from '../_services/employee.service';
+import { Employee } from '../_models/employee';
+import { Assignment } from '../_models/assignment';
 
 @Component({
   selector: 'app-choose-assignment',
@@ -9,14 +12,27 @@ import { EmployeeService } from '../_services/employee.service';
 })
 export class ChooseAssignmentComponent implements OnInit {
 
-  constructor(private EmployeeService: EmployeeService) { }
+  currentEmployee: Employee|null = null;
+  assignments: Assignment[];
+
+  constructor(private assignmentService: AssignmentService,
+              private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.EmployeeService.isEmployeeAllowed();
+    
+    if(this.employeeService.currentEmployee){
+      this.currentEmployee = this.employeeService.currentEmployee
+    }else{
+      this.employeeService.getCurrentEmployee().subscribe((employee) =>{
+        this.currentEmployee = employee;
+      });
+    }
+
+    this.assignmentService.getAssignments().subscribe();
   }
 
   onLogout(){
-    this.EmployeeService.logout();
+    this.employeeService.logout().subscribe();
   }
 
 }

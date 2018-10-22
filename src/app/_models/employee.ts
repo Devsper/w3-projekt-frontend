@@ -4,7 +4,7 @@ export class Employee {
 
         public username: string,
         public id: number,
-        public name: string
-        
+        public name: string,
+        public admin: string
     ){}
 }

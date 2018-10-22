@@ -12,15 +12,21 @@ import { Task } from '../_models/task';
 })
 export class ChooseTaskComponent implements OnInit {
 
-  currentEmployee: Employee;
+  currentEmployee: Employee|null = null;
   tasks: Task[];
 
   constructor(private taskService: TaskService,
               private employeeService: EmployeeService) { }
 
   ngOnInit() {
-    this.employeeService.isEmployeeAllowed();
-    this.currentEmployee = this.employeeService.getCurrentEmployee();
+    
+    if(this.employeeService.currentEmployee){
+      this.currentEmployee = this.employeeService.currentEmployee
+    }else{
+      this.employeeService.getCurrentEmployee().subscribe((employee) =>{
+        this.currentEmployee = employee;
+      });
+    }
 
     this.taskService.getTasks().subscribe(data =>{
       this.tasks = data;

@@ -35,8 +35,10 @@ export class EmployeeService {
 
               this.employeeLoggedIn = true;
               localStorage.employeeLoggedIn = true;
+              localStorage.employeeId = employee.id;
+              localStorage.employeeToken = body.token;
               
-              this.currentEmployee = new Employee(employee.username, employee.id, employee.name);
+              this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin);
 
               return body.startpage;
             }
@@ -46,22 +48,31 @@ export class EmployeeService {
   logout(){
 
     let logoutUrl = this.serverUrl+"/logout.php";
-
-    return this.http.get(logoutUrl, { observe: "response"})
-      .pipe(
-        map(() => {
+  
+    return this.http.get(logoutUrl, { 
+      observe: "response",
+      params: {logout: "true"}
+      }).pipe(
+        map((data) => {
           
+          console.log(data);
+
           this.employeeLoggedIn = false;
           localStorage.removeItem("employeeLoggedIn");
+          localStorage.removeItem("employeeToken");
           delete this.currentEmployee;
           this.router.navigate(['/'])
         
         }));
-
   }
   
   checkLoginStatus(){
-    return this.employeeLoggedIn;
+    
+    if(localStorage.employeeToken){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   isEmployeeAllowed(){
@@ -71,6 +82,26 @@ export class EmployeeService {
   }
 
   getCurrentEmployee(){
-    return this.currentEmployee;
+
+    let employeeUrl = "http://localhost/w3-projekt/app/api/employee.php";
+    let currentId = localStorage.employeeId;
+    let authToken = localStorage.employeeToken;
+    
+    return this.http.get(employeeUrl, { 
+      observe: "response",
+      params: {id: currentId, token: authToken }
+      }).pipe(
+        map((data: any) => {
+
+          let body = data.body[0]; 
+
+          this.currentEmployee = new Employee(body.username, body.id, body.name, body.admin);
+          return this.currentEmployee;
+        }));
+    
+  }
+
+  getCurrentEmployeeId(){
+    return localStorage.employeeId;
   }
 }

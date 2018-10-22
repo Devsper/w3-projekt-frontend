@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { EmployeeService } from '../_services/employee.service';
 
 import { Task } from '../_models/task';
 import { Subtask } from '../_models/subtask';
@@ -12,23 +12,27 @@ import { Subtask } from '../_models/subtask';
 })
 export class TaskService {
 
-  //tasks: Task[];
+  authToken = localStorage.employeeToken;
 
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private employeeService: EmployeeService) { }
 
   private serverUrl = 'http://localhost/w3-projekt/app';
   
   getTasks(){
 
     let getDataUrl = this.serverUrl+"/get_data.php";
+    let postBody = {
+      "getData": "employeeTasks",
+      "token": this.authToken,
+      "employee_Id": this.employeeService.getCurrentEmployeeId()
+    }
 
-    return this.http.get(getDataUrl, {
+    return this.http.post(getDataUrl, postBody ,{
       
-      withCredentials: true,
       observe: "response",
-      headers: new HttpHeaders({"Content-Type": "application/json"}), 
-      params: {getData: 'employeeTasks'}})
+      headers: new HttpHeaders({"Content-Type": "application/json"}) 
+      })
               .pipe(
                 map((res: any) =>{
                   

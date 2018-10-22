@@ -8,11 +8,12 @@ import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MainComponent } from './main/main.component';
+import { ChooseAssignmentComponent } from './choose-assignment/choose-assignment.component';
+import { ChooseTaskComponent } from './choose-task/choose-task.component';
 
 import { TaskService } from './_services/task.service';
 import { EmployeeService } from './_services/employee.service';
-import { ChooseAssignmentComponent } from './choose-assignment/choose-assignment.component';
-import { ChooseTaskComponent } from './choose-task/choose-task.component';
+import { AssignmentService } from './_services/assignment.service';
 
 
 const routes = [
@@ -40,7 +41,7 @@ const routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [TaskService, EmployeeService],
+  providers: [TaskService, EmployeeService, AssignmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

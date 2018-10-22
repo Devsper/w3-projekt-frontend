@@ -10,7 +10,7 @@ import { EmployeeService } from '../_services/employee.service';
 })
 export class LoginFormComponent implements OnInit{
 
-  username = "jefr";
+  username = "mibe";
   password = "1234";
 
   constructor(private employeeService: EmployeeService,

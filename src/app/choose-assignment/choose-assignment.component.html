@@ -1,4 +1,4 @@
-<p>
-  choose-assignment works!
+<p *ngIf="currentEmployee">
+    Välkommen {{currentEmployee.name}} {{currentEmployee.username}} {{currentEmployee.id}}
 </p>
 <button (click)="onLogout()">Logga ut</button>
