@@ -68,7 +68,7 @@ export class EmployeeService {
   
   checkLoginStatus(){
     
-    if(localStorage.employeeToken){
+    if(localStorage.employeeLoggedIn){
       return true;
     }else{
       return false;
@@ -82,8 +82,8 @@ export class EmployeeService {
   }
 
   getCurrentEmployee(){
-
-    let employeeUrl = "http://localhost/w3-projekt/app/api/employee.php";
+    
+    let employeeUrl = this.serverUrl+"/api/employee.php";
     let currentId = localStorage.employeeId;
     let authToken = localStorage.employeeToken;
     

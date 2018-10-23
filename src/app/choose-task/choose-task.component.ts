@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TaskService } from '../_services/task.service';
 import { EmployeeService } from '../_services/employee.service';
+import { ShiftService } from '../_services/shift.service';
 import { Employee } from '../_models/employee';
 import { Task } from '../_models/task';
 
@@ -16,10 +17,17 @@ export class ChooseTaskComponent implements OnInit {
   tasks: Task[];
 
   constructor(private taskService: TaskService,
-              private employeeService: EmployeeService) { }
+              private employeeService: EmployeeService,
+              private shiftService: ShiftService) { }
 
   ngOnInit() {
     
+    this.shiftService.initShift();
+    this.shiftService.shiftToAdd.shiftType = "subtask";
+
+    console.log(this.shiftService.shiftToAdd);
+    
+
     if(this.employeeService.currentEmployee){
       this.currentEmployee = this.employeeService.currentEmployee
     }else{

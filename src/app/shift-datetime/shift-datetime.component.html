@@ -1,0 +1,36 @@
+<p>
+  shift-datetime works!
+</p>
+
+<form (ngSubmit)="onSubmit(dateForm)" #dateForm="ngForm">
+    <div class="input-group">
+        <input class="form-control" placeholder="Välj ett datum" ngx-mydatepicker name="datepicker"
+               [(ngModel)]="model" [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
+
+        <span class="input-group-btn">
+            <button type="button" (click)="dp.clearDate()">
+                Radera
+            </button>
+            <button type="button" (click)="dp.toggleCalendar()">
+                Lägg till
+            </button>
+        </span>
+    </div>
+    <div>
+      <select name="startTimeHour" id="startTimeHour" [ngModel]="hours[0].value" required>
+        <option *ngFor="let hour of hours" [ngValue]="hour.value" [disabled]="hour.disabled">{{hour.text}}</option>
+      </select>
+      <select name="startTimeMinute" id="startTimeMinute" [ngModel]="minutes[0].value" required>
+          <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
+      </select>
+    </div>
+    <div>
+        <select name="endTimeHour" id="endTimeHour" [ngModel]="hours[0].value" required>
+          <option *ngFor="let hour of hours" [ngValue]="hour.value">{{hour.text}}</option>
+        </select>
+        <select name="endTimeMinute" id="endTimeMinute" [ngModel]="minutes[0].value" required>
+            <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
+        </select>
+      </div>
+      <button type="submit">Nästa steg</button>
+</form>

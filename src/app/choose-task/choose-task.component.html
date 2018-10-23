@@ -4,13 +4,11 @@
 <div *ngIf="tasks">
   <div *ngFor="let task of tasks">
     <h3>{{ task.name }}</h3>
-
     <div *ngFor="let subtask of task['subtasks']">
       
-      <a routerLink="add-shift/subtask/{{subtask.id}}">{{subtask.name}}</a>
+      <a routerLink="{{subtask.id}}/datetime">{{subtask.name}}</a>
 
     </div>
   </div>
-
 </div>
 <button (click)="onLogout()">Logga ut</button>

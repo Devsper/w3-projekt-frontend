@@ -1,4 +1,11 @@
 <p *ngIf="currentEmployee">
     Välkommen {{currentEmployee.name}} {{currentEmployee.username}} {{currentEmployee.id}}
 </p>
+<div *ngIf="assignments">
+    <div *ngFor="let assignment of assignments">
+
+        <a routerLink="{{assignment.id}}/datetime">{{assignment.name}}</a>
+    </div>
+</div>
 <button (click)="onLogout()">Logga ut</button>
+      

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AssignmentService } from '../_services/assignment.service';
 import { EmployeeService } from '../_services/employee.service';
+import { ShiftService } from '../_services/shift.service';
 import { Employee } from '../_models/employee';
 import { Assignment } from '../_models/assignment';
 
@@ -16,10 +17,14 @@ export class ChooseAssignmentComponent implements OnInit {
   assignments: Assignment[];
 
   constructor(private assignmentService: AssignmentService,
-              private employeeService: EmployeeService) { }
+              private employeeService: EmployeeService,
+              private shiftService: ShiftService) { }
 
   ngOnInit() {
     
+    this.shiftService.initShift();
+    this.shiftService.shiftToAdd.shiftType = "assignment";
+
     if(this.employeeService.currentEmployee){
       this.currentEmployee = this.employeeService.currentEmployee
     }else{
@@ -28,7 +33,9 @@ export class ChooseAssignmentComponent implements OnInit {
       });
     }
 
-    this.assignmentService.getAssignments().subscribe();
+    this.assignmentService.getAssignments().subscribe(data =>{
+      this.assignments = data;
+    });
   }
 
   onLogout(){

@@ -27,7 +27,6 @@ export class AssignmentService {
     }
 
     return this.http.post(getDataUrl, postBody ,{
-      
       observe: "response",
       headers: new HttpHeaders({"Content-Type": "application/json"}), 
       })
@@ -36,17 +35,16 @@ export class AssignmentService {
                   
                   let data = res.body.data;
 
-                  console.log(res);
                   let assignments: Assignment[] = [];
 
-                  // data.forEach(element => {
+                  data.forEach(element => {
 
-                  //   let assignment: Assignment = {
-                  //     "name": <string>element,
-                  //   }
+                    let assignment: Assignment = {
+                      "name": <string>element,
+                    }
 
-                  //   assignments.push(assignment);
-                  // });
+                    assignments.push(assignment);
+                  });
                   
                   return data;
                 })

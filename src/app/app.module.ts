@@ -14,13 +14,18 @@ import { ChooseTaskComponent } from './choose-task/choose-task.component';
 import { TaskService } from './_services/task.service';
 import { EmployeeService } from './_services/employee.service';
 import { AssignmentService } from './_services/assignment.service';
+import { ShiftService } from './_services/shift.service';
+import { ShiftDatetimeComponent } from './shift-datetime/shift-datetime.component';
 
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 const routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginFormComponent},
-  { path: 'user/choose-assignment', component: ChooseAssignmentComponent },
-  { path: 'user/choose-task', component: ChooseTaskComponent },
+  { path: 'user/shift/assignment', component: ChooseAssignmentComponent },
+  { path: 'user/shift/task', component: ChooseTaskComponent },
+  { path: 'user/shift/assignment/:id/datetime', component: ShiftDatetimeComponent },
+  { path: 'user/shift/subtask/:id/datetime', component: ShiftDatetimeComponent },
   { path: 'tasks', component: TasksComponent},
   { path: 'tasks/:id/subtask/:id2', component: TasksComponent},
   { path: '**', redirectTo: 'login'}
@@ -33,15 +38,17 @@ const routes = [
     LoginFormComponent,
     MainComponent,
     ChooseAssignmentComponent,
-    ChooseTaskComponent
+    ChooseTaskComponent,
+    ShiftDatetimeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgxMyDatePickerModule.forRoot()
   ],
-  providers: [TaskService, EmployeeService, AssignmentService],
+  providers: [TaskService, EmployeeService, AssignmentService, ShiftService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
