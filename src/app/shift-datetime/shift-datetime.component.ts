@@ -19,7 +19,7 @@ export class ShiftDatetimeComponent implements OnInit {
     {text: "11", value: 11},{text: "12", value: 12},{text: "13", value: 13},
     {text: "14", value: 14},{text: "15", value: 15},{text: "16", value: 16},
     {text: "17", value: 17},{text: "18", value: 18},{text: "19", value: 19},
-    {text: "20", value: 20},{text: "21", value: 21},{text: "22", value: 20},
+    {text: "20", value: 20},{text: "21", value: 21},{text: "22", value: 22},
   ]
   
   minutes = [
@@ -43,9 +43,6 @@ export class ShiftDatetimeComponent implements OnInit {
   ngOnInit() {
 
     this.shiftService.shiftToAdd.relationship_Id = +this.route.snapshot.paramMap.get("id");
-    
-    console.log(this.shiftService.shiftToAdd);
-    
   }
 
   // optional date changed callback
@@ -56,7 +53,10 @@ export class ShiftDatetimeComponent implements OnInit {
 
   onSubmit(submittedForm){
     
+    console.log(submittedForm);
+    
     if(submittedForm.valid){
+      
       let year = submittedForm.value.datepicker.date.year;
       let month = submittedForm.value.datepicker.date.month-1;
       let day = submittedForm.value.datepicker.date.day;
@@ -67,10 +67,8 @@ export class ShiftDatetimeComponent implements OnInit {
 
       this.shiftService.shiftToAdd.startTime = new Date(year, month, day, startHour, startMinute);
       this.shiftService.shiftToAdd.endTime = new Date(year, month, day, endHour, endMinute);
-
-      console.log(this.shiftService.shiftToAdd);
       
-      this.router.navigate['shift/overview'];
+      this.router.navigate(['user/shift/overview']);
     }
   }
 

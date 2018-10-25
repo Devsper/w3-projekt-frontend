@@ -27,7 +27,7 @@ export class EmployeeService {
       observe: "response"
       }).pipe(
         map((data: any) => {
-
+            
             let body = data.body;
             let employee = data.body.employee;
 
@@ -38,8 +38,9 @@ export class EmployeeService {
               localStorage.employeeId = employee.id;
               localStorage.employeeToken = body.token;
               
-              this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin);
+              this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin, body.startpage);
 
+              console.log(this.currentEmployee);
               return body.startpage;
             }
       }));
@@ -75,12 +76,6 @@ export class EmployeeService {
     }
   }
 
-  isEmployeeAllowed(){
-    if(!this.employeeLoggedIn){
-      this.router.navigate(['/']);
-    }
-  }
-
   getCurrentEmployee(){
     
     let employeeUrl = this.serverUrl+"/api/employee.php";
@@ -95,7 +90,7 @@ export class EmployeeService {
 
           let body = data.body[0]; 
 
-          this.currentEmployee = new Employee(body.username, body.id, body.name, body.admin);
+          this.currentEmployee = new Employee(body.username, body.id, body.name, body.admin, body.startpage);
           return this.currentEmployee;
         }));
     

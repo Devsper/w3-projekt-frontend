@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { EmployeeService } from '../_services/employee.service';
+import { ShiftService } from '../_services/shift.service';
 
 @Component({
   selector: 'app-main',
@@ -9,13 +10,17 @@ import { EmployeeService } from '../_services/employee.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,
+              private shiftService: ShiftService) { }
 
   ngOnInit() {
-    this.employeeService.isEmployeeAllowed();
+    
+    if(this.employeeService.checkLoginStatus()){
+      this.shiftService.initShift();
+    }
   }
 
   onLogout(){
-    this.employeeService.logout();
+    this.employeeService.logout().subscribe();
   }
 }

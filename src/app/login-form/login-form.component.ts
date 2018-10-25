@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EmployeeService } from '../_services/employee.service';
+import { ShiftService } from '../_services/shift.service';
 
 @Component({
   selector: 'app-login-form',
@@ -14,7 +15,8 @@ export class LoginFormComponent implements OnInit{
   password = "1234";
 
   constructor(private employeeService: EmployeeService,
-              private router: Router) { }
+              private shiftService: ShiftService,
+              private router: Router) {}
 
 
   ngOnInit() {
@@ -34,13 +36,13 @@ export class LoginFormComponent implements OnInit{
     let password = submittedForm.value.password;
 
     this.employeeService.login(username, password).subscribe((redirectPath) =>{
-      
+
       if(redirectPath == "assignments"){
         this.router.navigate(['user/shift/assignment']);
       }
 
       if(redirectPath == "tasks"){
-        this.router.navigate(['user/shift/task']);
+        this.router.navigate(['user/shift/subtask']);
       }
 
     });

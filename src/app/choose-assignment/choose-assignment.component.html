@@ -3,8 +3,14 @@
 </p>
 <div *ngIf="assignments">
     <div *ngFor="let assignment of assignments">
-
-        <a routerLink="{{assignment.id}}/datetime">{{assignment.name}}</a>
+        <div *ngIf="!backToOverview">
+            <a *ngIf="!assignment.hasTasks" routerLink="{{assignment.id}}/datetime" #a (click)="addTask(a)">{{assignment.name}}</a>
+            <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtask" #a (click)="addTask(a)">{{assignment.name}}</a>
+        </div>
+        <div *ngIf="backToOverview">
+            <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview" #a (click)="addTask(a)">{{assignment.name}}</a>
+            <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtask" #a (click)="addTask(a)">{{assignment.name}}</a>
+        </div>
     </div>
 </div>
 <button (click)="onLogout()">Logga ut</button>

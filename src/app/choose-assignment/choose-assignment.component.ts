@@ -15,15 +15,21 @@ export class ChooseAssignmentComponent implements OnInit {
 
   currentEmployee: Employee|null = null;
   assignments: Assignment[];
+  backToOverview;
 
   constructor(private assignmentService: AssignmentService,
               private employeeService: EmployeeService,
               private shiftService: ShiftService) { }
 
   ngOnInit() {
+
+    if(!this.shiftService.updateShift){
+      this.shiftService.initShift();
+    }
     
-    this.shiftService.initShift();
     this.shiftService.shiftToAdd.shiftType = "assignment";
+    this.backToOverview = this.shiftService.updateShift;
+    console.log(this.backToOverview);
 
     if(this.employeeService.currentEmployee){
       this.currentEmployee = this.employeeService.currentEmployee
@@ -33,13 +39,16 @@ export class ChooseAssignmentComponent implements OnInit {
       });
     }
 
-    this.assignmentService.getAssignments().subscribe(data =>{
-      this.assignments = data;
+    this.assignmentService.getAssignments().subscribe(assignments =>{
+      this.assignments = assignments;
     });
+  }
+
+  addTask(usedLink){
+    this.shiftService.shiftToAdd.task = usedLink.text;
   }
 
   onLogout(){
     this.employeeService.logout().subscribe();
   }
-
 }

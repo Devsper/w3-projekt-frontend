@@ -15,18 +15,21 @@ export class ChooseTaskComponent implements OnInit {
 
   currentEmployee: Employee|null = null;
   tasks: Task[];
+  backToOverview;
 
   constructor(private taskService: TaskService,
               private employeeService: EmployeeService,
               private shiftService: ShiftService) { }
 
   ngOnInit() {
-    
-    this.shiftService.initShift();
-    this.shiftService.shiftToAdd.shiftType = "subtask";
 
-    console.log(this.shiftService.shiftToAdd);
-    
+    if(!this.shiftService.updateShift){
+      this.shiftService.initShift();
+    }
+
+    this.shiftService.shiftToAdd.shiftType = "subtask";
+    this.backToOverview = this.shiftService.updateShift;
+    console.log(this.backToOverview);
 
     if(this.employeeService.currentEmployee){
       this.currentEmployee = this.employeeService.currentEmployee
@@ -39,6 +42,10 @@ export class ChooseTaskComponent implements OnInit {
     this.taskService.getTasks().subscribe(data =>{
       this.tasks = data;
     });
+  }
+
+  addTask(usedLink){
+    this.shiftService.shiftToAdd.task = usedLink.text;
   }
 
   onLogout(){

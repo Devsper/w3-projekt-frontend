@@ -1,0 +1,8 @@
+<p *ngIf="date">
+    Arbetspasset är tillagt och sparat för {{date | date:'LLLL'}}
+</p>
+
+<a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignment">Lägg till ny arbetsuppgift</a>
+<a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtask">Lägg till ny arbetsuppgift</a>
+<a routerLink="/user/shift/overview">Översikt för jobbtimmar</a>
+<span><button (click)="onLogout()">Logga ut</button></span>

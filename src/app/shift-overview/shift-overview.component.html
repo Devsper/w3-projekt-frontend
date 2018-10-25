@@ -1,0 +1,15 @@
+<p>
+  shift-overview works!
+</p>
+
+<div *ngIf="shiftToAdd">
+  <div>Uppgift: {{shiftToAdd.task}}
+    <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtask" (click)="onUpdate()">Ändra uppgift</a>
+    <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignment" (click)="onUpdate()">Ändra uppgift</a>
+  </div>
+  <div>Starttid: {{shiftToAdd.startTime | date:'d MMMM, y, HH:mm'}}</div>
+  <div>Sluttid: {{shiftToAdd.endTime | date:'d MMMM, y, HH:mm'}}</div>
+  <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtask/{{taskId}}/datetime">Ändra tid & datum</a>
+  <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignment/{{taskId}}/datetime">Ändra tid & datum</a>
+</div>
+<button (click)="onAddShift()">Lägg till arbetspass</button>

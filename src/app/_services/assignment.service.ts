@@ -30,24 +30,21 @@ export class AssignmentService {
       observe: "response",
       headers: new HttpHeaders({"Content-Type": "application/json"}), 
       })
-              .pipe(
-                map((res: any) =>{
-                  
-                  let data = res.body.data;
+        .pipe(
+          map((res: any) =>{
+            
+            let data = res.body.data;
+            let assignments: Assignment[] = [];
+             
+            data.forEach((element) => {
 
-                  let assignments: Assignment[] = [];
+              let assignment = new Assignment(element.name, (element.hasTasks === "True"), element.id);
+              assignments.push(assignment);
 
-                  data.forEach(element => {
+            });
 
-                    let assignment: Assignment = {
-                      "name": <string>element,
-                    }
-
-                    assignments.push(assignment);
-                  });
-                  
-                  return data;
-                })
-              );
+            return assignments;
+          })
+        );
   }
 }
