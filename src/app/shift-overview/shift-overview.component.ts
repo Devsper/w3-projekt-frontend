@@ -16,6 +16,27 @@ export class ShiftOverviewComponent implements OnInit {
   shiftToAdd: Shift;
   taskId: number;
   currentEmployee: Employee;
+  shiftsByMonth: boolean = false;
+  currentDate = new Date();
+  currentMonth = ""+(this.currentDate.getMonth()+1);
+  currentYear = ""+this.currentDate.getFullYear();
+  shifts: Shift[];
+
+  optionYears = ["2018", "2017"];
+  optionMonths = [
+                {value: "01", label: "Januari"},
+                {value: "02", label: "Februari"},
+                {value: "03", label: "Mars"},
+                {value: "04", label: "April"},
+                {value: "05", label: "Maj"},
+                {value: "06", label: "Juni"},
+                {value: "07", label: "Juli"},
+                {value: "08", label: "Augusti"},
+                {value: "09", label: "September"},
+                {value: "10", label: "Oktober"},
+                {value: "11", label: "November"},
+                {value: "12", label: "December"},
+                ];
   
   constructor(private shiftService: ShiftService,
               private employeeService: EmployeeService,
@@ -23,11 +44,25 @@ export class ShiftOverviewComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.shiftToAdd = this.shiftService.getShiftToAdd();
-    this.taskId = this.shiftService.shiftToAdd.relationship_Id;
-    this.shiftService.updateShift = false;
+
     this.currentEmployee = this.employeeService.currentEmployee;
-    console.log(this.shiftService.updateShift);
+    console.log(this.currentMonth);
+
+    if(this.shiftService.isShiftCreationActive()){
+
+      this.shiftToAdd = this.shiftService.getShiftToAdd();
+      this.taskId = this.shiftService.shiftToAdd.relationship_Id;
+      this.shiftService.updateShift = false;
+    }else{
+
+      this.shiftsByMonth = true;
+      let fetchDate = this.formatDate(this.currentYear, this.currentMonth);
+      console.log(fetchDate);
+      this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
+
+        this.shifts = shifts;
+      });
+    }
   }
   
   onAddShift(){
@@ -40,7 +75,26 @@ export class ShiftOverviewComponent implements OnInit {
     });
   }
 
+  onDateSubmit(submittedForm){
+    
+    let fetchDate = this.formatDate(submittedForm.value.byYear, submittedForm.value.byMonth);
+    console.log(fetchDate);
+
+    this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
+
+      this.shifts = shifts;
+
+      console.log(this.shifts);
+    });
+
+  }
+
   onUpdate(){
     this.shiftService.updateShift = true;
+  }
+
+  private formatDate(year, month): string{
+
+    return year+"-"+month;
   }
 }

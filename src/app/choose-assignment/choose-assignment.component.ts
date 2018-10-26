@@ -23,29 +23,28 @@ export class ChooseAssignmentComponent implements OnInit {
 
   ngOnInit() {
 
-    if(!this.shiftService.updateShift){
-      this.shiftService.initShift();
-    }
-    
-    this.shiftService.shiftToAdd.shiftType = "assignment";
     this.backToOverview = this.shiftService.updateShift;
     console.log(this.backToOverview);
 
     if(this.employeeService.currentEmployee){
       this.currentEmployee = this.employeeService.currentEmployee
     }else{
-      this.employeeService.getCurrentEmployee().subscribe((employee) =>{
+      this.employeeService.fetchCurrentEmployee().subscribe((employee) =>{
         this.currentEmployee = employee;
       });
     }
 
-    this.assignmentService.getAssignments().subscribe(assignments =>{
+    this.assignmentService.fetchAssignments().subscribe(assignments =>{
       this.assignments = assignments;
     });
   }
 
   addTask(usedLink){
+    
+    this.shiftService.initShift();
     this.shiftService.shiftToAdd.task = usedLink.text;
+    this.shiftService.shiftToAdd.employee_Id = +this.employeeService.fetchFromStorage("id");
+    this.shiftService.shiftToAdd.shiftType = "assignment";
   }
 
   onLogout(){

@@ -17,7 +17,7 @@ export class AssignmentService {
 
   private serverUrl = 'http://localhost/w3-projekt/app';
 
-  getAssignments(){
+  fetchAssignments(){
 
     let getDataUrl = this.serverUrl+"/get_data.php";
     let postBody = {

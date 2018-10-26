@@ -34,11 +34,12 @@ export class EmployeeService {
             if(body.message == true){
 
               this.employeeLoggedIn = true;
-              localStorage.employeeLoggedIn = true;
-              localStorage.employeeId = employee.id;
               localStorage.employeeToken = body.token;
+              localStorage.employeeloggedIn = true;
               
               this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin, body.startpage);
+              
+              this.saveToStorage();
 
               console.log(this.currentEmployee);
               return body.startpage;
@@ -76,10 +77,10 @@ export class EmployeeService {
     }
   }
 
-  getCurrentEmployee(){
+  fetchCurrentEmployee(){
     
     let employeeUrl = this.serverUrl+"/api/employee.php";
-    let currentId = localStorage.employeeId;
+    let currentId = this.fetchFromStorage("id");
     let authToken = localStorage.employeeToken;
     
     return this.http.get(employeeUrl, { 
@@ -97,6 +98,37 @@ export class EmployeeService {
   }
 
   getCurrentEmployeeId(){
-    return localStorage.employeeId;
+    return this.fetchFromStorage("id");
+  }
+
+  private saveToStorage(){
+
+    let saveToStorage: Employee = this.currentEmployee;
+
+    localStorage.currentEmployee = JSON.stringify(saveToStorage);
+  }
+
+  public fetchFromStorage(properties: string[]|string){
+
+    let employee = JSON.parse(localStorage.currentEmployee);
+    let keys = Object.keys(employee);
+    let result;
+
+    if(properties instanceof Array){
+      
+      result = {};
+
+      keys.forEach( key => {
+      
+        if(properties.find(p => {return p == key} )){
+          result[key] = employee[key];
+        }
+      });
+    }else{
+      result = employee[properties];
+    }
+    
+    console.log(result);
+    return result;
   }
 }

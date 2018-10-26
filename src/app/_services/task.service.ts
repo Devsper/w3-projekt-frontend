@@ -19,7 +19,7 @@ export class TaskService {
 
   private serverUrl = 'http://localhost/w3-projekt/app';
   
-  getTasks(){
+  fetchTasks(){
 
     let getDataUrl = this.serverUrl+"/get_data.php";
     let postBody = {

@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Shift } from '../_models/shift';
 import { map } from 'rxjs/operators';
 
+import { Employee } from '../_models/employee';
+import { EmployeeService } from '../_services/employee.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +15,8 @@ export class ShiftService {
   updateShift: boolean = false;
   private serverUrl = "http://localhost/w3-projekt/app";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              private employeeService: EmployeeService) {}
 
   initShift(){
     this.shiftToAdd = new Shift();
@@ -41,6 +45,43 @@ export class ShiftService {
         map((data: any) => {
           return data.body;
         }));
+  }
+
+  fetchShiftsByDate(dateToFetch){
+
+    let getUrl = this.serverUrl+"/api/shift.php";
+    let authToken = localStorage.employeeToken;
+    let employee_Id = this.employeeService.fetchFromStorage("id");
+
+    return this.http.get(getUrl, { 
+      observe: "response",
+      params: {token: authToken, date: dateToFetch, employee_Id: employee_Id }
+      }).pipe(
+        map((res:any) => {
+          
+          let data = res.body.data;
+          let shifts: Shift[] = [];
+          
+            data.forEach((element: Shift) => {
+
+              let shift = new Shift(element.id, element.startTime, element.endTime, element.taskName);
+              shifts.push(shift);
+            });
+        
+          return shifts;
+        }));
+  }
+
+  isShiftCreationActive(){
+  
+    if(typeof this.shiftToAdd !== "undefined"){
+      console.log(true);
+      
+      return true;
+    }else{
+      console.log(false);
+      return false;
+    }
   }
 
   resetShift(){
