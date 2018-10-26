@@ -22,14 +22,15 @@ import { ShiftDatetimeComponent } from './shift-datetime/shift-datetime.componen
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { ShiftOverviewComponent } from './shift-overview/shift-overview.component';
 import { ShiftSuccessComponent } from './shift-success/shift-success.component';
+import { HeaderComponent } from './header/header.component';
 
 registerLocaleData(localeSe);
 
 const routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'login', component: LoginFormComponent},
-  { path: 'user/shift/assignment', component: ChooseAssignmentComponent },
-  { path: 'user/shift/subtask', component: ChooseTaskComponent },
+  { path: 'user/shift/assignments', component: ChooseAssignmentComponent },
+  { path: 'user/shift/subtasks', component: ChooseTaskComponent },
   { path: 'user/shift/assignment/:id/datetime', component: ShiftDatetimeComponent },
   { path: 'user/shift/subtask/:id/datetime', component: ShiftDatetimeComponent },
   { path: 'user/shift/overview/:id', component: ShiftOverviewComponent },
@@ -50,7 +51,8 @@ const routes = [
     ChooseTaskComponent,
     ShiftDatetimeComponent,
     ShiftOverviewComponent,
-    ShiftSuccessComponent
+    ShiftSuccessComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

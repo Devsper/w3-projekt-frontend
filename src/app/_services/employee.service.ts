@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Employee } from '../_models/employee';
@@ -10,8 +11,9 @@ import { Employee } from '../_models/employee';
 })
 export class EmployeeService {
 
-  employeeLoggedIn = localStorage.employeeLoggedIn || false;
   currentEmployee: Employee;
+  employeeLoggedIn = localStorage.employeeLoggedIn || false;
+  subject = new Subject<boolean>();
   private serverUrl = "http://localhost/w3-projekt/app";
 
   constructor(private http: HttpClient,
@@ -33,13 +35,14 @@ export class EmployeeService {
 
             if(body.message == true){
 
-              this.employeeLoggedIn = true;
               localStorage.employeeToken = body.token;
-              localStorage.employeeloggedIn = true;
+              localStorage.employeeLoggedIn = true;
               
               this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin, body.startpage);
               
               this.saveToStorage();
+              
+              this.subject.next(true);
 
               console.log(this.currentEmployee);
               return body.startpage;
@@ -57,24 +60,35 @@ export class EmployeeService {
       }).pipe(
         map((data) => {
           
-          console.log(data);
+          console.log(localStorage.employeeLoggedIn);
+          console.log(localStorage.employeeToken);
+          console.log(localStorage.currentEmployee);
 
-          this.employeeLoggedIn = false;
+          this.subject.next(false);
+
           localStorage.removeItem("employeeLoggedIn");
           localStorage.removeItem("employeeToken");
+          localStorage.removeItem("currentEmployee");
           delete this.currentEmployee;
-          this.router.navigate(['/'])
-        
+          this.router.navigate(['/']);
+
+          console.log(localStorage.employeeLoggedIn);
+          console.log(localStorage.employeeToken);
+          console.log(localStorage.currentEmployee);
+
         }));
   }
   
-  checkLoginStatus(){
-    
-    if(localStorage.employeeLoggedIn){
-      return true;
+  isLoggedIn(asObservable?:boolean){
+    if(asObservable){
+      return this.subject.asObservable();  
     }else{
-      return false;
+      return this.employeeLoggedIn;
     }
+  }
+
+  sendLoginStatus(status: boolean){
+    this.subject.next(status);
   }
 
   fetchCurrentEmployee(){
@@ -94,7 +108,12 @@ export class EmployeeService {
           this.currentEmployee = new Employee(body.username, body.id, body.name, body.admin, body.startpage);
           return this.currentEmployee;
         }));
-    
+  }
+
+
+
+  getCurrentEmployee(){
+    return this.currentEmployee;
   }
 
   getCurrentEmployeeId(){
@@ -103,8 +122,7 @@ export class EmployeeService {
 
   private saveToStorage(){
 
-    let saveToStorage: Employee = this.currentEmployee;
-
+    let saveToStorage: Employee = this.currentEmployee; 
     localStorage.currentEmployee = JSON.stringify(saveToStorage);
   }
 
@@ -113,6 +131,12 @@ export class EmployeeService {
     let employee = JSON.parse(localStorage.currentEmployee);
     let keys = Object.keys(employee);
     let result;
+
+    if(properties === "full"){
+      this.currentEmployee = employee;
+      console.log(this.currentEmployee);
+      return this.currentEmployee;
+    }
 
     if(properties instanceof Array){
       

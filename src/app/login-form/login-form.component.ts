@@ -20,9 +20,11 @@ export class LoginFormComponent implements OnInit{
 
 
   ngOnInit() {
-    
-    if(this.employeeService.checkLoginStatus()){
-      this.router.navigate(['user']);
+
+    if(localStorage.employeeLoggedIn){
+
+      let startpage = this.employeeService.fetchFromStorage('startpage');
+      this.router.navigate(['user/shift/'+startpage]);
     }
   }
 
@@ -38,11 +40,11 @@ export class LoginFormComponent implements OnInit{
     this.employeeService.login(username, password).subscribe((redirectPath) =>{
 
       if(redirectPath == "assignments"){
-        this.router.navigate(['user/shift/assignment']);
+        this.router.navigate(['user/shift/assignments']);
       }
 
       if(redirectPath == "tasks"){
-        this.router.navigate(['user/shift/subtask']);
+        this.router.navigate(['user/shift/subtasks']);
       }
 
     });

@@ -41,12 +41,8 @@ export class ChooseTaskComponent implements OnInit {
   addTask(usedLink){
 
     this.shiftService.initShift();
-    this.shiftService.shiftToAdd.task = usedLink.text;
+    this.shiftService.shiftToAdd.taskName = usedLink.text;
     this.shiftService.shiftToAdd.employee_Id = +this.employeeService.fetchFromStorage("id");
     this.shiftService.shiftToAdd.shiftType = "subtask";
-  }
-
-  onLogout(){
-    this.employeeService.logout().subscribe();
   }
 }

@@ -15,12 +15,5 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     
-    if(this.employeeService.checkLoginStatus()){
-      this.shiftService.initShift();
-    }
-  }
-
-  onLogout(){
-    this.employeeService.logout().subscribe();
   }
 }
