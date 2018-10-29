@@ -7,7 +7,7 @@
     <div *ngFor="let subtask of task['subtasks']">
       
       <a *ngIf="!backToOverview" routerLink="{{subtask.id}}/datetime" #a (click)="addTask(a)">{{subtask.name}}</a>
-      <a *ngIf="backToOverview" routerLink="/user/shift/overview" #a (click)="addTask(a)">{{subtask.name}}</a>
+      <a *ngIf="backToOverview" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{subtask.name}}</a>
 
     </div>
   </div>

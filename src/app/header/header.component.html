@@ -2,11 +2,12 @@
   <div class="brand">
     <img src="http://devsper.com/fitness4you/wp-content/uploads/2018/06/logo.png" alt="">
   </div>
-  <div *ngIf="employeeLoggedIn" class="nav-container">
+  <div *ngIf="isEmployeeLoggedIn" class="nav-container">
     <nav>
       <ul>
-        <li><a routerLink="">Nytt skift</a></li>
-        <li><a routerLink="">Översikt timmar</a></li>
+        <li *ngIf="currentEmployee.startpage == 'tasks'"><a routerLink="/user/shift/subtasks">Nytt skift</a></li>
+        <li *ngIf="currentEmployee.startpage == 'assignments'"><a routerLink="/user/shift/assignments">Nytt skift</a></li>
+        <li><a routerLink="/user/shift/overview">Översikt timmar</a></li>
         <li><a routerLink="">Redigera uppgifter</a></li>
         <li *ngIf="currentEmployee.admin == 'Y'"><a routerLink="">Administration</a></li>
         <li><a routerLink="#" (click)="onLogout()">Logga ut</a></li>

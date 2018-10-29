@@ -8,7 +8,7 @@
             <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
         <div *ngIf="backToOverview">
-            <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview" #a (click)="addTask(a)">{{assignment.name}}</a>
+            <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{assignment.name}}</a>
             <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
     </div>

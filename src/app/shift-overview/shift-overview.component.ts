@@ -16,7 +16,11 @@ export class ShiftOverviewComponent implements OnInit {
   shiftToAdd: Shift;
   taskId: number;
   currentEmployee: Employee;
-  shiftsByMonth: boolean = false;
+
+  showShiftsByMonth: boolean = false;
+  showShiftToCreate: boolean = false;
+  showSingleShift: boolean = false;
+
   currentDate = new Date();
   currentMonth = ""+(this.currentDate.getMonth()+1);
   currentYear = ""+this.currentDate.getFullYear();
@@ -48,18 +52,26 @@ export class ShiftOverviewComponent implements OnInit {
     this.currentEmployee = this.employeeService.getCurrentEmployee();
 
     if(this.router.url === '/user/shift/overview/new'){
-      this.shiftToAdd = this.shiftService.getShiftToAdd();
-      console.log(this.shiftToAdd);
       
-      this.taskId = this.shiftService.shiftToAdd.relationship_Id;
-    }else{
+      if(this.shiftService.isShiftCreationActive()){
+        
+        this.showShiftToCreate = true;
+        this.shiftToAdd = this.shiftService.getShiftToAdd();
+        this.taskId = this.shiftService.shiftToAdd.relationship_Id;
+        
+      }else{
+        this.router.navigate(['/']);
+      }
+    
+    }else if(this.router.url === '/user/shift/overview'){
 
-      this.shiftsByMonth = true;
+      this.showShiftsByMonth = true;
       let fetchDate = this.formatDate(this.currentYear, this.currentMonth);
 
       this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
 
         this.shifts = shifts;
+
       });
     }
   }

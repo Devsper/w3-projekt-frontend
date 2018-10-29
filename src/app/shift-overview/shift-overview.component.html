@@ -1,19 +1,17 @@
-<p>
-  shift-overview works!
-</p>
-
-<div *ngIf="shiftToAdd !== undefined">
-  <div>Uppgift: {{shiftToAdd.task}}
-    <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtask" (click)="onUpdate()">Ändra uppgift</a>
-    <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignment" (click)="onUpdate()">Ändra uppgift</a>
+<div *ngIf="showShiftToCreate">
+  <div>Uppgift: {{shiftToAdd.taskName}}
+    <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtasks" (click)="onUpdate()">Ändra uppgift</a>
+    <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignments" (click)="onUpdate()">Ändra uppgift</a>
   </div>
   <div>Starttid: {{shiftToAdd.startTime | date:'d MMMM, y, HH:mm'}}</div>
   <div>Sluttid: {{shiftToAdd.endTime | date:'d MMMM, y, HH:mm'}}</div>
-  <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtask/{{taskId}}/datetime">Ändra tid & datum</a>
-  <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignment/{{taskId}}/datetime">Ändra tid & datum</a>
+  <a *ngIf="currentEmployee.startpage == 'tasks'" routerLink="/user/shift/subtasks/{{taskId}}/datetime">Ändra tid & datum</a>
+  <a *ngIf="currentEmployee.startpage == 'assignments'" routerLink="/user/shift/assignments/{{taskId}}/datetime">Ändra tid & datum</a>
+  
+  <button (click)="onSubmitShift()">Lägg till arbetspass</button>
 </div>
 
-<div *ngIf="shiftsByMonth">
+<div *ngIf="showShiftsByMonth">
   <form (ngSubmit)="onDateSubmit(form)" #form="ngForm">
     <select name="byYear" id="byYear" [ngModel]="currentYear" required>
       <option *ngFor="let year of optionYears" [ngValue]="year">{{year}}</option>
@@ -33,5 +31,3 @@
   <span *ngIf="shifts && shifts.length == 0">Inga skift att hämta för denna månad</span>
 
 </div>
-
-<button (click)="onSubmitShift()">Lägg till arbetspass</button>

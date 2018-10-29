@@ -75,11 +75,15 @@ export class ShiftService {
 
   isShiftCreationActive(){
   
-    if(typeof this.shiftToAdd !== "undefined"){      
+    if(typeof this.shiftToAdd.taskName !== "undefined"){      
       return true;
     }else{
       return false;
     }
+  }
+
+  isShiftBeingUpdated(){
+    return this.updateShift;
   }
 
   resetShift(){

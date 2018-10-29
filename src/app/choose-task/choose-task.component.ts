@@ -23,7 +23,7 @@ export class ChooseTaskComponent implements OnInit {
 
   ngOnInit() {
 
-    this.backToOverview = this.shiftService.updateShift;
+    this.backToOverview = this.shiftService.isShiftBeingUpdated();
 
     this.taskService.fetchTasks().subscribe(tasks =>{
       this.tasks = tasks;
@@ -32,9 +32,11 @@ export class ChooseTaskComponent implements OnInit {
 
   addTask(usedLink){
 
-    this.shiftService.initShift();
+    if(!this.shiftService.isShiftBeingUpdated()){
+      this.shiftService.initShift();
+    }
+
     this.shiftService.shiftToAdd.taskName = usedLink.text;
-    this.shiftService.shiftToAdd.employee_Id = +localStorage.employeeId;
     this.shiftService.shiftToAdd.shiftType = "subtask";
   }
 }

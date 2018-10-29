@@ -20,10 +20,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
 
-    if(this.employeeService.isLoggedIn()){
-      
-      this.shiftService.initShift();
-    }else{
+    if(!this.employeeService.isLoggedIn()){
       this.router.navigate(['/login']);
     }
   }

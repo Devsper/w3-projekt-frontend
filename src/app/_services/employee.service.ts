@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Employee } from '../_models/employee';
@@ -11,6 +11,7 @@ import { Employee } from '../_models/employee';
 })
 export class EmployeeService {
 
+  subject = new Subject<boolean>();
   currentEmployee: Employee;
   employeeLoggedIn = localStorage.employeeLoggedIn || false;
   private serverUrl = "http://localhost/w3-projekt/app";
@@ -43,6 +44,8 @@ export class EmployeeService {
               localStorage.employeeStartpage = body.startpage;
               this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin, body.startpage);
 
+              this.subject.next(true);
+
               return body.startpage;
             }
       }));
@@ -58,6 +61,7 @@ export class EmployeeService {
       }).pipe(
         map((data) => {
 
+          this.subject.next(false);
           localStorage.clear();
           delete this.currentEmployee;
           this.router.navigate(['/']);
@@ -67,6 +71,10 @@ export class EmployeeService {
   
   isLoggedIn(){
       return localStorage.employeeLoggedIn;
+  }
+
+  listenToLoginStatus(): Observable<any> {
+    return this.subject.asObservable();
   }
 
   // fetchCurrentEmployee(){
