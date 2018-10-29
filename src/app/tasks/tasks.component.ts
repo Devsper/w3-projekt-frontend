@@ -11,28 +11,26 @@ import { TaskService } from '../_services/task.service';
 export class TasksComponent implements OnInit {
 
   tasks;
-  subscription;
-
   constructor(private taskService: TaskService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-      // Fetch public/user decks depending on id is present or not 
-      this.activatedRoute.params.subscribe((params) => {
-            // console.log(params['id']);
-            // console.log(params['id2']);
-            this.loadTask(params['id'], params['id2']);
-      });
+    // Fetch public/user decks depending on id is present or not 
+    this.activatedRoute.params.subscribe((params) => {
+          // console.log(params['id']);
+          // console.log(params['id2']);
+          //this.loadTask(params['id'], params['id2']);
+    });
 
-      this.loadAllTasks();
+    this.loadAllTasks();
     
-    // Subscribes to a Subject, will fire when 'decksFetched' in service changes
-    this.subscription = this.taskService.tasksFetched.subscribe(
-      () => {
-        // Adds decks from service to component
-        this.tasks = this.taskService.tasks;
-      }
-  );
+  //   // Subscribes to a Subject, will fire when 'decksFetched' in service changes
+  //   this.subscription = this.taskService.tasksFetched.subscribe(
+  //     () => {
+  //       // Adds decks from service to component
+  //       this.tasks = this.taskService.tasks;
+  //     }
+  // );
 
   }
 
@@ -40,8 +38,8 @@ export class TasksComponent implements OnInit {
     //this.taskService.getAllTasks();
   }
 
-  public loadTask(id1, id2){
-    this.taskService.getTask(id1, id2);
-  }
+  // public loadTask(id1, id2){
+  //   this.taskService.getTask(id1, id2);
+  // }
 
 }

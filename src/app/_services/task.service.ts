@@ -25,7 +25,7 @@ export class TaskService {
     let postBody = {
       "getData": "employeeTasks",
       "token": this.authToken,
-      "employee_Id": this.employeeService.getCurrentEmployeeId()
+      "employee_Id": localStorage.employeeId
     }
 
     return this.http.post(getDataUrl, postBody ,{

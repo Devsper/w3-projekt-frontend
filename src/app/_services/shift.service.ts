@@ -20,6 +20,7 @@ export class ShiftService {
 
   initShift(){
     this.shiftToAdd = new Shift();
+    this.shiftToAdd.employee_Id = localStorage.employeeId;
     this.updateShift = false;
   }
 
@@ -27,7 +28,7 @@ export class ShiftService {
     return this.shiftToAdd;
   }
 
-  addShift(){
+  createShift(){
     
     let compensateTimeZone = 2;
     let postUrl = this.serverUrl+"/api/shift.php";
@@ -51,7 +52,7 @@ export class ShiftService {
 
     let getUrl = this.serverUrl+"/api/shift.php";
     let authToken = localStorage.employeeToken;
-    let employee_Id = this.employeeService.fetchFromStorage("id");
+    let employee_Id = localStorage.employeeId;
 
     return this.http.get(getUrl, { 
       observe: "response",
@@ -74,12 +75,9 @@ export class ShiftService {
 
   isShiftCreationActive(){
   
-    if(typeof this.shiftToAdd !== "undefined"){
-      console.log(true);
-      
+    if(typeof this.shiftToAdd !== "undefined"){      
       return true;
     }else{
-      console.log(false);
       return false;
     }
   }

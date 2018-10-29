@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { EmployeeService } from '../_services/employee.service';
 import { ShiftService } from '../_services/shift.service';
+import { Employee } from '../_models/employee';
 
 @Component({
   selector: 'app-login-form',
@@ -23,8 +24,9 @@ export class LoginFormComponent implements OnInit{
 
     if(localStorage.employeeLoggedIn){
 
-      let startpage = this.employeeService.fetchFromStorage('startpage');
-      this.router.navigate(['user/shift/'+startpage]);
+      let employee: Employee = this.employeeService.getCurrentEmployee();
+      console.log(employee);
+      this.router.navigate(['user/shift/'+employee.startpage]);
     }
   }
 

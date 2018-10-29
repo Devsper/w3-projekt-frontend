@@ -25,16 +25,8 @@ export class ChooseTaskComponent implements OnInit {
 
     this.backToOverview = this.shiftService.updateShift;
 
-    if(this.employeeService.currentEmployee){
-      this.currentEmployee = this.employeeService.currentEmployee
-    }else{
-      this.employeeService.fetchCurrentEmployee().subscribe((employee) =>{
-        this.currentEmployee = employee;
-      });
-    }
-
-    this.taskService.fetchTasks().subscribe(data =>{
-      this.tasks = data;
+    this.taskService.fetchTasks().subscribe(tasks =>{
+      this.tasks = tasks;
     });
   }
 
@@ -42,7 +34,7 @@ export class ChooseTaskComponent implements OnInit {
 
     this.shiftService.initShift();
     this.shiftService.shiftToAdd.taskName = usedLink.text;
-    this.shiftService.shiftToAdd.employee_Id = +this.employeeService.fetchFromStorage("id");
+    this.shiftService.shiftToAdd.employee_Id = +localStorage.employeeId;
     this.shiftService.shiftToAdd.shiftType = "subtask";
   }
 }

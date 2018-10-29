@@ -48,12 +48,9 @@ export class ShiftDatetimeComponent implements OnInit {
   // optional date changed callback
   onDateChanged(event: IMyDateModel): void {
     
-    console.log(event);
   }
 
   onSubmit(submittedForm){
-    
-    console.log(submittedForm);
     
     if(submittedForm.valid){
       
@@ -68,7 +65,7 @@ export class ShiftDatetimeComponent implements OnInit {
       this.shiftService.shiftToAdd.startTime = new Date(year, month, day, startHour, startMinute);
       this.shiftService.shiftToAdd.endTime = new Date(year, month, day, endHour, endMinute);
       
-      this.router.navigate(['user/shift/overview']);
+      this.router.navigate(['user/shift/overview/new']);
     }
   }
 

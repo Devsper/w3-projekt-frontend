@@ -16,4 +16,8 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     
   }
+
+  onLogout(){
+    this.employeeService.logout().subscribe();
+  }
 }

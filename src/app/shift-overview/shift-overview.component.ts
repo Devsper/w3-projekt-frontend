@@ -45,19 +45,18 @@ export class ShiftOverviewComponent implements OnInit {
 
   ngOnInit() {
 
-    this.currentEmployee = this.employeeService.currentEmployee;
-    console.log(this.currentMonth);
+    this.currentEmployee = this.employeeService.getCurrentEmployee();
 
-    if(this.shiftService.isShiftCreationActive()){
-
+    if(this.router.url === '/user/shift/overview/new'){
       this.shiftToAdd = this.shiftService.getShiftToAdd();
+      console.log(this.shiftToAdd);
+      
       this.taskId = this.shiftService.shiftToAdd.relationship_Id;
-      this.shiftService.updateShift = false;
     }else{
 
       this.shiftsByMonth = true;
       let fetchDate = this.formatDate(this.currentYear, this.currentMonth);
-      console.log(fetchDate);
+
       this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
 
         this.shifts = shifts;
@@ -65,10 +64,10 @@ export class ShiftOverviewComponent implements OnInit {
     }
   }
   
-  onAddShift(){
+  onSubmitShift(){
 
-    this.shiftService.addShift().subscribe(res =>{
-      console.log(res);
+    this.shiftService.createShift().subscribe(res =>{
+
       if(res.status == "success"){
         this.router.navigate(['user/shift/success']);
       }
@@ -78,13 +77,10 @@ export class ShiftOverviewComponent implements OnInit {
   onDateSubmit(submittedForm){
     
     let fetchDate = this.formatDate(submittedForm.value.byYear, submittedForm.value.byMonth);
-    console.log(fetchDate);
 
     this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
 
       this.shifts = shifts;
-
-      console.log(this.shifts);
     });
 
   }
