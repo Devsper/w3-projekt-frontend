@@ -1,0 +1,35 @@
+<div *ngIf="assignmentCheckboxes && activeRoute =='assignments'"> 
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <h2>Tjänster</h2>
+    <div *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
+    <div *ngFor="let checkbox of assignmentCheckboxes">
+        <label for="assignment-{{checkbox.id}}">{{checkbox.name}}</label>
+        <input #a
+          type="checkbox" [attr.checked]="checkbox.active ? 'checked' : null" 
+          name="isActive-{{checkbox.id}}"
+          id="assignment-{{checkbox.id}}"
+          [ngModel]="checkbox.active ? true : false" (ngModelChange)="onChange(a)">
+    </div>
+    <button type="submit">Spara val</button>
+  </form>
+</div>
+
+<div *ngIf="taskCheckboxes && activeRoute =='tasks'"> 
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <h2>Uppgifter</h2>
+      <div *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
+      <div *ngFor="let assignment of taskCheckboxes">
+          <h3>{{assignment.name}}</h3>
+          <div *ngIf="assignment.tasks.length == 0">Inga uppgifter finns tillgängliga för denna tjänst</div>
+          <div *ngFor="let task of assignment.tasks">
+              <label for="task-{{task.id}}">{{task.name}}</label>
+              <input #a
+                type="checkbox" [attr.checked]="task.active ? 'checked' : null" 
+                name="isActive-{{task.id}}"
+                id="task-{{task.id}}"
+                [ngModel]="task.active ? true : false" (ngModelChange)="onChange(a)">
+          </div>
+      </div>
+      <button type="submit">Spara val</button>
+    </form>
+  </div>

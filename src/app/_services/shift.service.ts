@@ -41,11 +41,7 @@ export class ShiftService {
     return this.http.post(postUrl, JSON.stringify(postBody), {
       headers: new HttpHeaders({"Content-Type": "application/json"}),
       observe: "response"
-      })
-      .pipe(
-        map((data: any) => {
-          return data.body;
-        }));
+      }).pipe(map((data: any) => data.body));
   }
 
   fetchShiftsByDate(dateToFetch){

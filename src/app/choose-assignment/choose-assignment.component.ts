@@ -28,7 +28,7 @@ export class ChooseAssignmentComponent implements OnInit {
     console.log(this.backToOverview);
 
     // Fetches assignments from service
-    this.assignmentService.fetchAssignments().subscribe(assignments =>{
+    this.assignmentService.fetchEmployeeAssignments().subscribe(assignments =>{
       // Fetched assignments
       this.assignments = assignments;
     });
@@ -38,7 +38,6 @@ export class ChooseAssignmentComponent implements OnInit {
     
     if(!this.shiftService.isShiftBeingUpdated()){
       this.shiftService.initShift();
-      console.log("what");
     }
     
     this.shiftService.shiftToAdd.taskName = usedLink.text;

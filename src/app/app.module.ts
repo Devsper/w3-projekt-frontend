@@ -7,7 +7,6 @@ import { registerLocaleData } from '@angular/common';
 import localeSe from '@angular/common/locales/sv';
 
 import { AppComponent } from './app.component';
-import { TasksComponent } from './tasks/tasks.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MainComponent } from './main/main.component';
 import { ChooseAssignmentComponent } from './choose-assignment/choose-assignment.component';
@@ -23,6 +22,7 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { ShiftOverviewComponent } from './shift-overview/shift-overview.component';
 import { ShiftSuccessComponent } from './shift-success/shift-success.component';
 import { HeaderComponent } from './header/header.component';
+import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 
 registerLocaleData(localeSe);
 
@@ -37,15 +37,14 @@ const routes = [
   { path: 'user/shift/overview/:id', component: ShiftOverviewComponent },
   { path: 'user/shift/overview', component: ShiftOverviewComponent },
   { path: 'user/shift/success', component: ShiftSuccessComponent },
-  { path: 'tasks', component: TasksComponent},
-  { path: 'tasks/:id/subtask/:id2', component: TasksComponent},
+  { path: 'user/edit/assignments', component: EditSettingsComponent },
+  { path: 'user/edit/tasks', component: EditSettingsComponent },
   { path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksComponent,
     LoginFormComponent,
     MainComponent,
     ChooseAssignmentComponent,
@@ -53,7 +52,8 @@ const routes = [
     ShiftDatetimeComponent,
     ShiftOverviewComponent,
     ShiftSuccessComponent,
-    HeaderComponent
+    HeaderComponent,
+    EditSettingsComponent
   ],
   imports: [
     BrowserModule,

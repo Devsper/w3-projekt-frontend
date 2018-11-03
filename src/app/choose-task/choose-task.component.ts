@@ -25,7 +25,7 @@ export class ChooseTaskComponent implements OnInit {
 
     this.backToOverview = this.shiftService.isShiftBeingUpdated();
 
-    this.taskService.fetchTasks().subscribe(tasks =>{
+    this.taskService.fetchTasksSubtasks().subscribe(tasks =>{
       this.tasks = tasks;
     });
   }

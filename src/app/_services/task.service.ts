@@ -19,11 +19,11 @@ export class TaskService {
 
   private serverUrl = 'http://localhost/w3-projekt/app';
   
-  fetchTasks(){
+  fetchTasksSubtasks(){
 
     let getDataUrl = this.serverUrl+"/get_data.php";
     let postBody = {
-      "getData": "employeeTasks",
+      "getData": "employeeTasksSubtasks",
       "token": this.authToken,
       "employee_Id": localStorage.employeeId
     }
@@ -37,8 +37,11 @@ export class TaskService {
                 map((res: any) =>{
                   
                   let data = res.body.data;
-                  let distinctKeys = new Set(data.map(obj => obj.task));
+                  let distinctKeys = new Set(data.map(obj => obj.taskName));
+                  console.log(distinctKeys);
                   let tasks: Task[] = [];
+
+                  console.log(data);
 
                   distinctKeys.forEach(element => {
 
@@ -53,9 +56,9 @@ export class TaskService {
                   data.forEach(element => {
                     
                     // Creates subtask from fetched data
-                    let subtask: Subtask = { "name": element.subtask, "id": element.subtaskId };
+                    let subtask: Subtask = { "name": element.subtaskName, "id": element.subtaskId };
                     // Finds correct array to push subtask to
-                    let objectToPush: Task = tasks.find(obj => obj.name == element.task);
+                    let objectToPush: Task = tasks.find(obj => obj.name == element.taskName);
 
                     objectToPush.subtasks.push(subtask);
                   });
@@ -63,5 +66,63 @@ export class TaskService {
                   return tasks;
                 })
               );
+  }
+
+  fetchEmployeeActiveTasks(){
+
+    let getDataUrl = this.serverUrl+"/get_data.php";
+    let postBody = {
+      "getData": "employeeActiveTasks",
+      "token": this.authToken,
+      "employee_Id": localStorage.employeeId
+    }
+
+    return this.http.post(getDataUrl, postBody ,{
+      observe: "response",
+      headers: new HttpHeaders({"Content-Type": "application/json"}), 
+      })
+        .pipe(
+          map((res: any) =>{
+            
+            let data = res.body.data;
+            let tasks: Task[] = [];
+            
+            data.forEach((element) => {
+
+              let task = new Task(element.taskName, element.taskId);
+              tasks.push(task);
+
+            });
+
+            return tasks;
+          })
+        );
+  }
+
+  fetchAllTasks(){
+    
+    let getDataUrl = this.serverUrl+"/api/task.php";
+
+    return this.http.get(getDataUrl, {
+      observe: "response",
+      params: {token: this.authToken},
+      headers: new HttpHeaders({"Content-Type": "application/json"}), 
+      })
+        .pipe(
+          map((res: any) =>{
+            
+            let data = res.body.data;
+            let tasks: Task[] = [];
+
+            console.log(res.body.data);
+            data.forEach((element) => {
+
+              let assignment = new Task(element.name , element.id);
+              tasks.push(assignment);
+            });
+
+            return tasks;
+          })
+        );
   }
 }

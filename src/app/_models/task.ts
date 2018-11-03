@@ -5,4 +5,9 @@ export class Task {
     id?: number;
     name: string;
     subtasks?: Subtask[];
+
+    constructor(name?: string, id?: number){
+        this.id = id;
+        this.name = name;
+    }
 }
