@@ -37,7 +37,7 @@ export class AssignmentService {
             
             let data = res.body.data;
             let assignments: Assignment[] = [];
-             
+            
             data.forEach((element) => {
 
               let assignment = new Assignment(element.name, element.id, [], (element.hasTasks === "True"));

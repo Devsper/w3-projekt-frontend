@@ -6,8 +6,6 @@ import { AssignmentService } from '../_services/assignment.service';
 import { Assignment } from '../_models/assignment';
 import { TaskService } from '../_services/task.service';
 import { Task } from '../_models/task';
-import { all } from 'q';
-import { isObject } from 'util';
 
 
 @Component({
@@ -69,7 +67,7 @@ export class EditSettingsComponent implements OnInit {
           return element;
       });
 
-      this.createInitialCheckboxArray();
+     // this.createInitialCheckboxArray();
     });
   }
 
@@ -87,7 +85,6 @@ export class EditSettingsComponent implements OnInit {
       this.taskCheckboxes = allTasks.map(element =>{ 
 
           let currentTasks = element.tasks;
-
           // Loops through every task in assignment
           currentTasks.forEach(task =>{
 
@@ -103,58 +100,114 @@ export class EditSettingsComponent implements OnInit {
           return element;
       });
 
-      this.createInitialCheckboxArray();
+      //this.createInitialCheckboxArray();
     });
   }
 
   onChange(a){
     
-    let assignmentId = a.id.split("-")[1];
-    let assignment = this.assignmentCheckboxes.find(obj => obj.id === assignmentId);
-    assignment.active = !assignment.active;
-  }
-
-  onSubmit(submittedForm){
-
-    let submittedCheckboxValues = Object.values(submittedForm.value);
-    let initialStateChange = false;
-
-    // Determine if checkbox values has changed from initial state
-    this.initialCheckboxValues.forEach((element, index) => {
-
-      if(element.active != submittedCheckboxValues[index]){
-        initialStateChange = true;
-        return;
-      }
-    });
-
-    console.log(initialStateChange);
+    let checkboxId = a.id.split("-")[1];
     
-    let checkedBoxes = this.assignmentCheckboxes.filter(element => element.active == true);
-    let idsOfCheckedBoxes = checkedBoxes.map(element => +element.id);
+    if(this.assignmentCheckboxes){
+      console.log("assignment");
 
-    if(initialStateChange){
-      this.assignmentService.updateAssignments(idsOfCheckedBoxes).subscribe(res =>{
+      let assignment = this.assignmentCheckboxes.find(obj => obj.id === checkboxId);
+      assignment.active = !assignment.active;
+    }
 
-        if(res.status == "success"){
-          // Updates initial values if values successfully added to database
-          this.createInitialCheckboxArray();
-          this.showMessage = true;
-        }
+    if(this.taskCheckboxes){
+    
+      this.taskCheckboxes.forEach(element => {
+        
+        let task = element.tasks.find(obj => obj.id === checkboxId) || {};
+        task.active = !task.active;
       });
     }
   }
 
-  private createInitialCheckboxArray(){
 
-    // Creates a copy of array
+  onSubmit(submittedForm){
+
+    //let submittedCheckboxValues = Object.values(submittedForm.value);
+    let checkedBoxes = [];
+
+    console.log(submittedForm);
+
+    //if(!this.hasCheckboxesChanged(submittedCheckboxValues)){ return }
+
     if(this.assignmentCheckboxes){
-      this.initialCheckboxValues = JSON.parse(JSON.stringify(this.assignmentCheckboxes));
+      checkedBoxes = this.assignmentCheckboxes.filter(element => element.active == true);
+    }else if(this.taskCheckboxes){
+
+      this.taskCheckboxes.forEach(element => {
+        
+        let tasks = element.tasks.filter(e => e.active == true);
+        checkedBoxes.push(tasks);
+      });
+      checkedBoxes = checkedBoxes.concat.apply([], checkedBoxes);
     }
 
-    if(this.taskCheckboxes){
-      this.initialCheckboxValues = JSON.parse(JSON.stringify(this.taskCheckboxes));
+    let idsOfCheckedBoxes = checkedBoxes.map(element => +element.id);
+    
+    if(this.assignmentCheckboxes){
+      this.submitAssignments(idsOfCheckedBoxes);
+    }else if(this.taskCheckboxes){
+      this.submitTasks(idsOfCheckedBoxes);
     }
 
   }
+
+  private submitAssignments(idsOfCheckedBoxes){
+    
+    this.assignmentService.updateAssignments(idsOfCheckedBoxes).subscribe(res =>{
+
+      if(res.status == "success"){
+        // Updates initial values if values successfully added to database
+        //this.createInitialCheckboxArray();
+        this.showMessage = true;
+      }
+    });
+
+  }
+
+  private submitTasks(idsOfCheckedBoxes){
+
+    this.taskService.updateTasks(idsOfCheckedBoxes).subscribe(res =>{
+
+      console.log(res);
+      if(res.status == "success"){
+        // Updates initial values if values successfully added to database
+        //this.createInitialCheckboxArray();
+        this.showMessage = true;
+      }
+    });
+  }
+
+  // private createInitialCheckboxArray(){
+
+  //   // Creates a copy of array
+  //   if(this.assignmentCheckboxes){
+  //     this.initialCheckboxValues = JSON.parse(JSON.stringify(this.assignmentCheckboxes));
+  //   }
+
+  //   if(this.taskCheckboxes){
+  //     this.initialCheckboxValues = JSON.parse(JSON.stringify(this.taskCheckboxes));
+  //   }
+  // }
+
+  // private hasCheckboxesChanged(submittedValues){
+    
+  //   let initialStateChange = false;
+  //   // Determine if checkbox values has changed from initial state
+  //   this.initialCheckboxValues.forEach((element, index) => {
+      
+  //     if(element.active != submittedValues[index]){
+        
+  //       initialStateChange = true;
+  //       return initialStateChange;
+  //     }
+  //   });
+
+  //   return initialStateChange;
+  // }
 }

@@ -40,6 +40,7 @@ export class ChooseAssignmentComponent implements OnInit {
       this.shiftService.initShift();
     }
     
+    this.shiftService.shiftToAdd.relationship_Id = usedLink.id;
     this.shiftService.shiftToAdd.taskName = usedLink.text;
     this.shiftService.shiftToAdd.shiftType = "assignment";
 

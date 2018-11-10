@@ -5,12 +5,11 @@
     <div *ngFor="let assignment of assignments">
         <div *ngIf="!backToOverview">
             <a *ngIf="!assignment.hasTasks" routerLink="{{assignment.id}}/datetime" #a (click)="addTask(a)">{{assignment.name}}</a>
-            <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
+            <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id"  routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
         <div *ngIf="backToOverview">
             <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{assignment.name}}</a>
-            <a *ngIf="assignment.hasTasks" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
+            <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
     </div>
 </div>
-      

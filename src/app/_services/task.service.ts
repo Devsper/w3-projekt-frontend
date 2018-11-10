@@ -25,7 +25,8 @@ export class TaskService {
     let postBody = {
       "getData": "employeeTasksSubtasks",
       "token": this.authToken,
-      "employee_Id": localStorage.employeeId
+      "employee_Id": localStorage.employeeId,
+      "assignment_Id": 1
     }
 
     return this.http.post(getDataUrl, postBody ,{
@@ -35,6 +36,8 @@ export class TaskService {
       })
               .pipe(
                 map((res: any) =>{
+                  
+                  console.log(res);
                   
                   let data = res.body.data;
                   let distinctKeys = new Set(data.map(obj => obj.taskName));
@@ -124,5 +127,23 @@ export class TaskService {
             return tasks;
           })
         );
+  }
+
+  updateTasks(taskIds: number[]){
+
+    console.log(taskIds);
+    
+    let postUrl = this.serverUrl+"/handle_relationships.php";
+    let postBody = {
+      "token": this.authToken,
+      "employee_Id": +localStorage.employeeId,
+      "relationship": "tasks",
+      "taskIds": taskIds
+    }
+
+    return this.http.post(postUrl, postBody ,{
+      observe: "response",
+      headers: new HttpHeaders({"Content-Type": "application/json"}), 
+      }).pipe(map((res: any) => res.body));
   }
 }
