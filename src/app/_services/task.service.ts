@@ -37,8 +37,6 @@ export class TaskService {
               .pipe(
                 map((res: any) =>{
                   
-                  console.log(res);
-                  
                   let data = res.body.data;
                   let distinctKeys = new Set(data.map(obj => obj.taskName));
                   console.log(distinctKeys);
@@ -130,8 +128,6 @@ export class TaskService {
   }
 
   updateTasks(taskIds: number[]){
-
-    console.log(taskIds);
     
     let postUrl = this.serverUrl+"/handle_relationships.php";
     let postBody = {

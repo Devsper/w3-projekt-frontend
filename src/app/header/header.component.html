@@ -5,8 +5,7 @@
   <div *ngIf="isEmployeeLoggedIn" class="nav-container">
     <nav>
       <ul>
-        <li *ngIf="currentEmployee.startpage == 'tasks'"><a routerLink="/user/shift/subtasks">Nytt skift</a></li>
-        <li *ngIf="currentEmployee.startpage == 'assignments'"><a routerLink="/user/shift/assignments">Nytt skift</a></li>
+        <li><a routerLink="/user/shift/assignments">Nytt skift</a></li>
         <li><a routerLink="/user/shift/overview">Översikt timmar</a></li>
         <li><a routerLink="/user/edit/assignments">Redigera tjänster</a></li>
         <li><a routerLink="/user/edit/tasks">Redigera uppgifter</a></li>

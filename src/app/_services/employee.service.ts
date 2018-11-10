@@ -42,12 +42,14 @@ export class EmployeeService {
               localStorage.employeeName = employee.name;
               localStorage.employeeAdmin = employee.admin;
               localStorage.employeeStartpage = body.startpage;
-              this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin, body.startpage);
+              this.currentEmployee = new Employee(employee.username, employee.id, employee.name, employee.admin);
 
               this.subject.next(true);
 
-              return body.startpage;
+              return true;
             }
+
+            return false;
       }));
   }
 
@@ -107,7 +109,6 @@ export class EmployeeService {
         localStorage.employeeId, 
         localStorage.employeeName, 
         localStorage.employeeAdmin, 
-        localStorage.employeeStartpage
         );
 
     }

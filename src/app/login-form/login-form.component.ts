@@ -26,7 +26,7 @@ export class LoginFormComponent implements OnInit{
 
       let employee: Employee = this.employeeService.getCurrentEmployee();
       console.log(employee);
-      this.router.navigate(['user/shift/'+employee.startpage]);
+      this.router.navigate(['user/shift/assignments']);
     }
   }
 
@@ -39,16 +39,11 @@ export class LoginFormComponent implements OnInit{
     let username = submittedForm.value.username.toLowerCase();
     let password = submittedForm.value.password;
 
-    this.employeeService.login(username, password).subscribe((redirectPath) =>{
+    this.employeeService.login(username, password).subscribe((success) =>{
 
-      if(redirectPath == "assignments"){
+      if(success){
         this.router.navigate(['user/shift/assignments']);
       }
-
-      if(redirectPath == "tasks"){
-        this.router.navigate(['user/shift/subtasks']);
-      }
-
     });
   }
 }
