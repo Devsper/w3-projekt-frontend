@@ -23,6 +23,10 @@ import { ShiftOverviewComponent } from './shift-overview/shift-overview.componen
 import { ShiftSuccessComponent } from './shift-success/shift-success.component';
 import { HeaderComponent } from './header/header.component';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
+import { AdminStartComponent } from './admin/admin-start/admin-start.component';
+import { AdminEmployeeOverviewComponent } from './admin/admin-employee-overview/admin-employee-overview.component';
+import { AdminEmployeeSaveComponent } from './admin/admin-employee-save/admin-employee-save.component';
+import { AdminEmployeeCalculateComponent } from './admin/admin-employee-calculate/admin-employee-calculate.component';
 
 registerLocaleData(localeSe);
 
@@ -39,6 +43,10 @@ const routes = [
   { path: 'user/shift/success', component: ShiftSuccessComponent },
   { path: 'user/edit/assignments', component: EditSettingsComponent },
   { path: 'user/edit/tasks', component: EditSettingsComponent },
+  { path: 'admin', component: AdminStartComponent },
+  { path: 'admin/employee/overview', component: AdminEmployeeOverviewComponent },
+  { path: 'admin/employee/edit/:id', component: AdminEmployeeSaveComponent },
+  { path: 'admin/employee/create', component: AdminEmployeeSaveComponent },
   { path: '**', redirectTo: 'login'}
 ];
 
@@ -53,7 +61,11 @@ const routes = [
     ShiftOverviewComponent,
     ShiftSuccessComponent,
     HeaderComponent,
-    EditSettingsComponent
+    EditSettingsComponent,
+    AdminStartComponent,
+    AdminEmployeeOverviewComponent,
+    AdminEmployeeSaveComponent,
+    AdminEmployeeCalculateComponent
   ],
   imports: [
     BrowserModule,

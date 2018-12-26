@@ -9,7 +9,7 @@
         <li><a routerLink="/user/shift/overview">Översikt timmar</a></li>
         <li><a routerLink="/user/edit/assignments">Redigera tjänster</a></li>
         <li><a routerLink="/user/edit/tasks">Redigera uppgifter</a></li>
-        <li *ngIf="currentEmployee.admin == 'Y'"><a routerLink="">Administration</a></li>
+        <li *ngIf="currentEmployee.isAdmin == 'Y'"><a routerLink="/admin">Administration</a></li>
         <li><a routerLink="#" (click)="onLogout()">Logga ut</a></li>
       </ul>
     </nav>

@@ -1,16 +1,18 @@
 export class Employee {
 
-    public username: string;
-    public id: number;
-    public name: string;
-    public admin: string;
-    public hasBeenUpdated: boolean;
+    public username?: string;
+    public id?: number;
+    public name?: string;
+    public isAdmin?: string;
+    public password?: string;
+    public employeeNr?: string;
 
-    constructor(username: string, id: number, name: string, admin: string){
+    constructor(username?: string, id?: number, name?: string, isAdmin?: string, employeeNr?: string, password?: string){
         this.username = username;
         this.id = id;
         this.name = name;
-        this.admin = admin;
-        this.hasBeenUpdated = false;
+        this.isAdmin = isAdmin;
+        this.employeeNr = employeeNr;
+        this.password = password;
     }
 }

@@ -1,0 +1,38 @@
+<div *ngIf="employee">
+    <div *ngIf="success">Anställd har uppdaterats</div>
+    <div *ngIf="deleted">Anställd har raderats</div>
+    <form (ngSubmit)="onSubmit(editForm, 'isEdit')" #editForm="ngForm" id="editForm">
+        <fieldset [disabled]="deleted">
+            <label for="name">Namn</label>
+            <input type="text" ngModel [ngModel]="employee.name" id="name" name="name" required>
+            <label for="username">Användarnamn</label>
+            <input type="text" ngModel [ngModel]="employee.username" id="username" name="username" required>
+            <label for="password">Lösenord</label>
+            <input type="password" ngModel [ngModel]="employee.password" id="password" name="password" required>
+            <label for="employeeNr">Anställningsnr</label>
+            <input type="text" ngModel [ngModel]="employee.employeeNr" id="employeeNr" name="employeeNr" required>
+            <input type="hidden" ngModel [ngModel]="employee.id" id="id" name="id">
+            <button (click)="onDelete(editForm, $event)">Ta bort anställd</button>
+            <button type="submit" [disabled]="editForm.invalid">Spara</button>
+        </fieldset>
+      </form>
+</div>
+
+<br>
+<hr> 
+<br>
+
+<div *ngIf="!employee">
+    <div *ngIf="success">Anställd har lagts till</div>
+    <form (ngSubmit)="onSubmit(createForm, 'isCreate')" #createForm="ngForm">
+        <label for="name">Namn</label>
+        <input type="text" id="name" ngModel name="name" required>
+        <label for="username">Användarnamn</label>
+        <input type="text" id="username" ngModel name="username" required>
+        <label for="password">Lösenord</label>
+        <input type="password" id="password" ngModel name="password" required>
+        <label for="employeeNr">Anställningsnr</label>
+        <input type="text" id="employeeNr" ngModel name="employeeNr" required>
+        <button type="submit" [disabled]="createForm.invalid || success">Lägg till anställd</button>
+      </form>
+</div>

@@ -1,0 +1,12 @@
+<div *ngIf="employees">
+  
+  <div *ngFor="let employee of employees">
+    <div>{{employee.name}}</div>
+    <div>{{employee.username}}</div>
+    <div>{{employee.id}}</div>
+    <div>{{employee.isAdmin}}</div>
+    <div><a routerLink="/admin/employee/edit/{{employee.id}}">Redigera</a></div>
+    <hr>
+  </div>
+  <a routerLink="/admin/employee/create">Lägg till anställd</a>
+</div>

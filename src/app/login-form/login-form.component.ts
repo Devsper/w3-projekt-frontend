@@ -25,7 +25,6 @@ export class LoginFormComponent implements OnInit{
     if(localStorage.employeeLoggedIn){
 
       let employee: Employee = this.employeeService.getCurrentEmployee();
-      console.log(employee);
       this.router.navigate(['user/shift/assignments']);
     }
   }
