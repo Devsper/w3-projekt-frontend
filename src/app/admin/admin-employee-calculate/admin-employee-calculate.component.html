@@ -1,3 +1,22 @@
 <p>
-  admin-employee-calculate works!
+  admin-employee-calculate works! 1111
 </p>
+
+<div *ngIf="employees">
+
+  <div *ngFor="let employee of employees">
+    <p>{{employee.name}} ({{employee.username}})</p>
+    <table>
+      <tr *ngFor="let shift of employee.shifts">
+        <td>{{shift.taskName}}</td>
+        <td>{{shift.startTime | date:'HH:mm'}}</td>
+        <td>{{shift.endTime | date:'HH:mm'}}</td>
+        <td>{{shift.endTime | date:'MM-dd'}}</td>
+      </tr>
+    </table>
+    <p>{{employee.totalHours}}</p>
+  </div>
+  
+</div>
+
+<button (click)="onClick()">Hämta jobbtimmar för alla anställda.</button> 

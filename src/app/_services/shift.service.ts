@@ -13,6 +13,7 @@ export class ShiftService {
 
   shiftToAdd: Shift;
   updateShift: boolean = false;
+  authToken = localStorage.employeeToken;
   private serverUrl = "http://localhost/w3-projekt/app";
 
   constructor(private http: HttpClient,
@@ -64,7 +65,7 @@ export class ShiftService {
               let shift = new Shift(element.id, element.startTime, element.endTime, element.taskName);
               shifts.push(shift);
             });
-        
+
           return shifts;
         }));
   }
@@ -84,5 +85,36 @@ export class ShiftService {
 
   resetShift(){
     delete this.shiftToAdd;
+  }
+
+  fetchHours(){
+
+    let calcUrl = this.serverUrl+"/calculate_hours.php";
+
+    return this.http.get(calcUrl, { 
+      observe: "response",
+      params: {token: this.authToken, date: '2018-12'}
+      }).pipe(
+        map((res: any) => {
+
+          let employeeData = res.body;
+          let employees: Employee[] = [];
+
+          // Creates employee model from fetched data
+          employeeData.forEach(employee =>{
+    
+            let currentEmployee = new Employee(employee.username, null, employee.name);
+            currentEmployee.totalHours = employee.totalHours;
+
+            // Adds shift to employee model
+            employee.shifts.forEach(shift => {
+              currentEmployee.shifts.push(new Shift(null, shift.startTime, shift.endTime, shift.taskName));  
+            });
+
+            employees.push(currentEmployee);
+          });
+
+          return employees;
+        }));
   }
 }

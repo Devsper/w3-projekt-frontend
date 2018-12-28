@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AssignmentService } from '../_services/assignment.service';
-import { EmployeeService } from '../_services/employee.service';
+import { TaskService } from '../_services/task.service';
 import { ShiftService } from '../_services/shift.service';
 import { Employee } from '../_models/employee';
 import { Assignment } from '../_models/assignment';
@@ -18,7 +18,7 @@ export class ChooseAssignmentComponent implements OnInit {
   backToOverview;
 
   constructor(private assignmentService: AssignmentService,
-              private employeeService: EmployeeService,
+              private taskService: TaskService,
               private shiftService: ShiftService) {}
 
   ngOnInit() {
@@ -44,6 +44,6 @@ export class ChooseAssignmentComponent implements OnInit {
     this.shiftService.shiftToAdd.taskName = usedLink.text;
     this.shiftService.shiftToAdd.shiftType = "assignment";
 
-    console.log(this.shiftService.shiftToAdd);
+    this.taskService.assignmentId = usedLink.id;
   }
 }

@@ -47,6 +47,7 @@ const routes = [
   { path: 'admin/employee/overview', component: AdminEmployeeOverviewComponent },
   { path: 'admin/employee/edit/:id', component: AdminEmployeeSaveComponent },
   { path: 'admin/employee/create', component: AdminEmployeeSaveComponent },
+  { path: 'admin/employee/calculate-hours', component: AdminEmployeeCalculateComponent },
   { path: '**', redirectTo: 'login'}
 ];
 
@@ -65,7 +66,7 @@ const routes = [
     AdminStartComponent,
     AdminEmployeeOverviewComponent,
     AdminEmployeeSaveComponent,
-    AdminEmployeeCalculateComponent
+    AdminEmployeeCalculateComponent,
   ],
   imports: [
     BrowserModule,

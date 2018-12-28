@@ -51,7 +51,7 @@ export class AdminEmployeeSaveComponent implements OnInit {
     }
   }
 
-  onDelete(form, e){
+  onDelete(e){
 
     e.preventDefault();
 

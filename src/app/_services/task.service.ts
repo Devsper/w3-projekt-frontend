@@ -13,6 +13,7 @@ import { Subtask } from '../_models/subtask';
 export class TaskService {
 
   authToken = localStorage.employeeToken;
+  assignmentId: number;
 
   constructor(private http: HttpClient,
               private employeeService: EmployeeService) { }
@@ -26,7 +27,7 @@ export class TaskService {
       "getData": "employeeTasksSubtasks",
       "token": this.authToken,
       "employee_Id": localStorage.employeeId,
-      "assignment_Id": 1
+      "assignment_Id": this.assignmentId
     }
 
     return this.http.post(getDataUrl, postBody ,{

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ShiftService } from '../../_services/shift.service';
+import { Employee } from '../../_models/employee';
 
 @Component({
   selector: 'app-admin-employee-calculate',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminEmployeeCalculateComponent implements OnInit {
 
-  constructor() { }
+  employees: Employee[];
+
+  constructor(private shiftService: ShiftService) { }
 
   ngOnInit() {
   }
 
+  onClick(){
+    this.shiftService.fetchHours().subscribe(employees => {this.employees = employees; console.log(this.employees)});
+  }
 }
