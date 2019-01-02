@@ -7,12 +7,14 @@ export class Shift {
     taskName?: string;
     relationship_Id?: number;
     shiftType?: string;
+    shiftHours: number;
 
-    constructor(id?: number, startTime?: Date, endTime?: Date, taskName?: string){
+    constructor(id?: number, startTime?: Date, endTime?: Date, taskName?: string, shiftHours?: number){
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.taskName = taskName;
+        this.shiftHours = shiftHours;
     }
 
 }

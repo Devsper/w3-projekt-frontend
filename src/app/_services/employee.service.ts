@@ -107,9 +107,9 @@ export class EmployeeService {
 
         let employees: Employee[] = [];
         let data = <any>res.body;
-
-        data.forEach(element => {
-          employees.push(new Employee(element.username, element.id, element.name, element.isAdmin));
+        
+        data.forEach(employee => {
+          employees.push(new Employee(employee.username, employee.id, employee.name, employee.isAdmin, employee.employeeNr));
         });
 
         return employees;

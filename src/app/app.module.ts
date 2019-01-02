@@ -27,6 +27,7 @@ import { AdminStartComponent } from './admin/admin-start/admin-start.component';
 import { AdminEmployeeOverviewComponent } from './admin/admin-employee-overview/admin-employee-overview.component';
 import { AdminEmployeeSaveComponent } from './admin/admin-employee-save/admin-employee-save.component';
 import { AdminEmployeeCalculateComponent } from './admin/admin-employee-calculate/admin-employee-calculate.component';
+import { InfoBoxComponent } from './info-box/info-box.component';
 
 registerLocaleData(localeSe);
 
@@ -67,6 +68,7 @@ const routes = [
     AdminEmployeeOverviewComponent,
     AdminEmployeeSaveComponent,
     AdminEmployeeCalculateComponent,
+    InfoBoxComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+.message-success{
+    @include messageBox($successColor);    
+}
+
+.message-danger{
+    @include messageBox($dangerColor);
+}

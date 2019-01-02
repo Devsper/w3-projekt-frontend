@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Location} from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {INgxMyDpOptions, IMyDateModel} from 'ngx-mydatepicker';
 
-import { Shift } from '../_models/shift';
 import { ShiftService } from '../_services/shift.service';
 
 @Component({
@@ -38,17 +38,17 @@ export class ShiftDatetimeComponent implements OnInit {
   
   constructor(private shiftService: ShiftService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private location: Location) { }
 
   ngOnInit() {
 
     this.shiftService.shiftToAdd.relationship_Id = +this.route.snapshot.paramMap.get("id");
+
   }
 
   // optional date changed callback
-  onDateChanged(event: IMyDateModel): void {
-    
-  }
+  onDateChanged(event: IMyDateModel): void {}
 
   onSubmit(submittedForm){
     
@@ -67,6 +67,10 @@ export class ShiftDatetimeComponent implements OnInit {
       
       this.router.navigate(['user/shift/overview/new']);
     }
+  }
+
+  goBack(){
+    this.location.back();
   }
 
 }

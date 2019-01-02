@@ -1,12 +1,32 @@
+<app-info-box heading="Administration - Översikt anställda"></app-info-box>
 <div *ngIf="employees">
-  
-  <div *ngFor="let employee of employees">
-    <div>{{employee.name}}</div>
-    <div>{{employee.username}}</div>
-    <div>{{employee.id}}</div>
-    <div>{{employee.isAdmin}}</div>
-    <div><a routerLink="/admin/employee/edit/{{employee.id}}">Redigera</a></div>
-    <hr>
-  </div>
-  <a routerLink="/admin/employee/create">Lägg till anställd</a>
+  <div class="row">
+    <div class="col-md-12">
+        <table class="table">
+          <thead class="table-head">
+            <tr>
+              <th>Namn</th>
+              <th>Användarnamn</th>
+              <th>Anställningsnr</th>
+              <th>Administratör</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of employees">
+              <td>{{employee.name}}</td>
+              <td>{{employee.username}}</td>
+              <td>{{employee.employeeNr}}</td>
+              <td>{{employee.isAdmin}}</td>
+              <td><a routerLink="/admin/employee/edit/{{employee.id}}">Redigera</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 d-flex">
+          <button class="btn-primary ml-auto" routerLink="/admin/employee/create">Lägg till anställd</button>
+      </div>
+    </div>
 </div>

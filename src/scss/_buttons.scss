@@ -1,0 +1,54 @@
+.btn-primary{
+    @include btn($brandColor, white);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-danger{
+    @include btn($warningColor, white);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-app{
+
+    @include btn(#F3F3F3, #505050);
+    width: 100%;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    margin-bottom: 25px;
+    cursor: pointer;
+
+    a{
+        width: 100%;
+        display: block;
+        height: 100%;
+        text-align:center;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:focus, &:hover{
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+}
+
+.btn-app-big{
+    
+    height: 150px;
+
+    a{
+        line-height: 150px;
+    }
+}
+
+.btn-app-small{
+    height: 75px;
+
+    a{
+        line-height: 75px;
+    }
+}
+
+.correct-label-margin{
+    margin-top: 31px;
+}

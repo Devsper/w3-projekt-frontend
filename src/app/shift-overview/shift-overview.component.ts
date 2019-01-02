@@ -22,11 +22,13 @@ export class ShiftOverviewComponent implements OnInit {
   showSingleShift: boolean = false;
 
   currentDate = new Date();
-  currentMonth = ""+(this.currentDate.getMonth()+1);
+  // Creates a string from  date, adds a leading zero
+  // If month is double digit slice -2 will remove the leading zero
+  currentMonth = ("0"+(this.currentDate.getMonth()+1)).slice(-2);
   currentYear = ""+this.currentDate.getFullYear();
   shifts: Shift[];
 
-  optionYears = ["2018", "2017"];
+  optionYears = ["2019", "2018", "2017"]; // Hardcoded
   optionMonths = [
                 {value: "01", label: "Januari"},
                 {value: "02", label: "Februari"},
@@ -58,7 +60,6 @@ export class ShiftOverviewComponent implements OnInit {
         this.showShiftToCreate = true;
         this.shiftToAdd = this.shiftService.getShiftToAdd();
         this.taskId = this.shiftService.shiftToAdd.relationship_Id;
-        
       }else{
         this.router.navigate(['/']);
       }
@@ -68,11 +69,7 @@ export class ShiftOverviewComponent implements OnInit {
       this.showShiftsByMonth = true;
       let fetchDate = this.formatDate(this.currentYear, this.currentMonth);
 
-      this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
-
-        this.shifts = shifts;
-
-      });
+      this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts => this.shifts = shifts);
     }
   }
   

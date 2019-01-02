@@ -65,7 +65,7 @@ export class ShiftService {
               let shift = new Shift(element.id, element.startTime, element.endTime, element.taskName);
               shifts.push(shift);
             });
-
+            
           return shifts;
         }));
   }
@@ -93,7 +93,7 @@ export class ShiftService {
 
     return this.http.get(calcUrl, { 
       observe: "response",
-      params: {token: this.authToken, date: '2018-12'}
+      params: {token: this.authToken, date: '2018-12'} // Currently hardcoded
       }).pipe(
         map((res: any) => {
 
@@ -108,7 +108,7 @@ export class ShiftService {
 
             // Adds shift to employee model
             employee.shifts.forEach(shift => {
-              currentEmployee.shifts.push(new Shift(null, shift.startTime, shift.endTime, shift.taskName));  
+              currentEmployee.shifts.push(new Shift(null, shift.startTime, shift.endTime, shift.taskName, shift.shiftHours));  
             });
 
             employees.push(currentEmployee);

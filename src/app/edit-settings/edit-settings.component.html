@@ -1,35 +1,46 @@
-<div *ngIf="assignmentCheckboxes && activeRoute =='assignments'"> 
+<div *ngIf="assignmentCheckboxes && activeRoute =='assignments'">
+  <app-info-box heading="Anpassa tjänster" subtext="Kryssa i de tjänster du har hos oss"></app-info-box> 
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-    <h2>Tjänster</h2>
-    <div *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
-    <div *ngFor="let checkbox of assignmentCheckboxes">
-        <label for="assignment-{{checkbox.id}}">{{checkbox.name}}</label>
+    <div class="message-success" *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <h3>Tjänster</h3>
+      </div>
+      <div class="col-md-3" *ngFor="let checkbox of assignmentCheckboxes">
         <input #a
-          type="checkbox" [attr.checked]="checkbox.active ? 'checked' : null" 
-          name="isActive-{{checkbox.id}}"
-          id="assignment-{{checkbox.id}}"
-          [ngModel]="checkbox.active ? true : false" (ngModelChange)="onChange(a)">
+        type="checkbox" [attr.checked]="checkbox.active ? 'checked' : null" 
+        name="isActive-{{checkbox.id}}"
+        id="assignment-{{checkbox.id}}"
+        [ngModel]="checkbox.active ? true : false" (ngModelChange)="onChange(a)">
+        <label class="ml-2" for="assignment-{{checkbox.id}}">{{checkbox.name}}</label>
+      </div>
     </div>
-    <button type="submit">Spara val</button>
+    <button class="btn-primary" type="submit">Spara val</button>
   </form>
 </div>
 
 <div *ngIf="taskCheckboxes && activeRoute =='tasks'"> 
+    <app-info-box heading="Anpassa arbetsuppgifter" subtext="Kryssa i de arbetsuppgifter du har hos oss"></app-info-box>
     <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-      <h2>Uppgifter</h2>
-      <div *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
-      <div *ngFor="let assignment of taskCheckboxes">
-          <h3>{{assignment.name}}</h3>
-          <div *ngIf="assignment.tasks.length == 0">Inga uppgifter finns tillgängliga för denna tjänst</div>
-          <div *ngFor="let task of assignment.tasks">
-              <label for="task-{{task.id}}">{{task.name}}</label>
-              <input #a
-                type="checkbox" [attr.checked]="task.active ? 'checked' : null" 
-                name="isActive-{{task.id}}"
-                id="task-{{task.id}}"
-                [ngModel]="task.active ? true : false" (ngModelChange)="onChange(a)">
+      <div class="message-success" *ngIf="showMessage">Dina arbetsuppgifter har uppdaterats!</div>
+      <div class="row">
+          <div class="col-md-2" *ngFor="let assignment of taskCheckboxes">
+              <h3>{{assignment.name}}</h3>
+              <div *ngIf="assignment.tasks.length == 0">Inga uppgifter tillgängliga</div>
+              <div *ngFor="let task of assignment.tasks">
+                    <input #a
+                    type="checkbox" [attr.checked]="task.active ? 'checked' : null" 
+                    name="isActive-{{task.id}}"
+                    id="task-{{task.id}}"
+                    [ngModel]="task.active ? true : false" (ngModelChange)="onChange(a)">
+                    <label class="ml-2" for="task-{{task.id}}">{{task.name}}</label>
+              </div>
           </div>
       </div>
-      <button type="submit">Spara val</button>
+      <div class="my-3">
+        <p class="mb-0">Hittar du inte rätt arbetsuppgifter?</p>
+        <a routerLink="/user/edit/assignments">Kanske måste du lägga till tillhörande tjänst</a>
+      </div>
+      <button class="btn-primary" type="submit">Spara val</button>
     </form>
   </div>

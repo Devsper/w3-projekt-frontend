@@ -40,10 +40,7 @@ export class TaskService {
                   
                   let data = res.body.data;
                   let distinctKeys = new Set(data.map(obj => obj.taskName));
-                  console.log(distinctKeys);
                   let tasks: Task[] = [];
-
-                  console.log(data);
 
                   distinctKeys.forEach(element => {
 
@@ -115,8 +112,7 @@ export class TaskService {
             
             let data = res.body.data;
             let tasks: Task[] = [];
-
-            console.log(res.body.data);
+            
             data.forEach((element) => {
 
               let assignment = new Task(element.name , element.id);

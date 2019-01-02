@@ -1,0 +1,15 @@
+@import '../../scss/variables';
+
+.header{
+    padding-top: 35px;
+}
+
+.brand{
+    margin-bottom: 45px;
+}
+
+.navbar{
+    height: 55px;
+    margin-bottom: 50px;
+    background-color: $brandColor;
+}

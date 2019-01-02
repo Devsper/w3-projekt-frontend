@@ -66,8 +66,6 @@ export class EditSettingsComponent implements OnInit {
 
           return element;
       });
-
-     // this.createInitialCheckboxArray();
     });
   }
 
@@ -99,8 +97,6 @@ export class EditSettingsComponent implements OnInit {
 
           return element;
       });
-
-      //this.createInitialCheckboxArray();
     });
   }
 
@@ -109,7 +105,6 @@ export class EditSettingsComponent implements OnInit {
     let checkboxId = a.id.split("-")[1];
     
     if(this.assignmentCheckboxes){
-      console.log("assignment");
 
       let assignment = this.assignmentCheckboxes.find(obj => obj.id === checkboxId);
       assignment.active = !assignment.active;
@@ -130,8 +125,6 @@ export class EditSettingsComponent implements OnInit {
 
     //let submittedCheckboxValues = Object.values(submittedForm.value);
     let checkedBoxes = [];
-
-    console.log(submittedForm);
 
     //if(!this.hasCheckboxesChanged(submittedCheckboxValues)){ return }
 
@@ -174,7 +167,6 @@ export class EditSettingsComponent implements OnInit {
 
     this.taskService.updateTasks(idsOfCheckedBoxes).subscribe(res =>{
 
-      console.log(res);
       if(res.status == "success"){
         // Updates initial values if values successfully added to database
         //this.createInitialCheckboxArray();

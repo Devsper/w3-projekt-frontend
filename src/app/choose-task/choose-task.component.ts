@@ -32,10 +32,6 @@ export class ChooseTaskComponent implements OnInit {
 
   addTask(usedLink){
 
-    // if(!this.shiftService.isShiftBeingUpdated()){
-    //   this.shiftService.initShift();
-    // }
-
     this.shiftService.shiftToAdd.taskName = usedLink.text;
     this.shiftService.shiftToAdd.shiftType = "subtask";
   }

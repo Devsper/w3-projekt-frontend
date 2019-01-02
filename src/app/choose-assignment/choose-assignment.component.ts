@@ -13,7 +13,6 @@ import { Assignment } from '../_models/assignment';
 })
 export class ChooseAssignmentComponent implements OnInit {
 
-  currentEmployee: Employee|null = null;
   assignments: Assignment[];
   backToOverview;
 
@@ -25,7 +24,6 @@ export class ChooseAssignmentComponent implements OnInit {
 
     // Determine if shift is being updated and should go back to overview when changed
     this.backToOverview = this.shiftService.isShiftBeingUpdated();
-    console.log(this.backToOverview);
 
     // Fetches assignments from service
     this.assignmentService.fetchEmployeeAssignments().subscribe(assignments =>{

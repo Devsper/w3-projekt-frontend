@@ -1,0 +1,26 @@
+@mixin btn($bgColor, $textColor){
+
+    background-color: $bgColor;
+    border: 1px solid darken($bgColor, 5);
+    color:  $textColor;
+    padding: 5px 15px;
+
+    &:focus, &:hover{
+        background-color: darken($bgColor, 5);
+        border: 1px solid darken($bgColor, 10);
+    }
+
+    a{
+        color:  $textColor;
+    }
+}
+
+@mixin messageBox($color){
+
+    background-color: lighten($color, 55);
+    display: block;
+    color: $color;
+    border: 1px solid $color;
+    padding: 5px 10px;
+    margin: 10px 0;
+}

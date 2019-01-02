@@ -1,0 +1,19 @@
+.table-head{
+    background: $brandColor;
+    color: white;
+   
+}
+
+.table{
+    border: 1px solid $darkgrey;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.table td, .table th{
+    padding: 8px;
+}
+
+.table tr:nth-child(even){
+    background: $lightgrey;
+}

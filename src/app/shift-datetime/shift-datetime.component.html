@@ -1,36 +1,43 @@
-<p>
-  shift-datetime works!
-</p>
-
-<form (ngSubmit)="onSubmit(dateForm)" #dateForm="ngForm">
-    <div class="input-group">
-        <input class="form-control" placeholder="Välj ett datum" ngx-mydatepicker name="datepicker"
-               [(ngModel)]="model" [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
-
-        <span class="input-group-btn">
-            <button type="button" (click)="dp.clearDate()">
-                Radera
-            </button>
-            <button type="button" (click)="dp.toggleCalendar()">
-                Lägg till
-            </button>
-        </span>
-    </div>
+<app-info-box heading="Datum & Tid" subtext="Lägg till datum och tid för det avklarade arbetspasset"></app-info-box>
+<div class="row">
     <div>
-      <select name="startTimeHour" id="startTimeHour" [ngModel]="hours[0].value" required>
-        <option *ngFor="let hour of hours" [ngValue]="hour.value" [disabled]="hour.disabled">{{hour.text}}</option>
-      </select>
-      <select name="startTimeMinute" id="startTimeMinute" [ngModel]="minutes[0].value" required>
-          <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
-      </select>
+        <form (ngSubmit)="onSubmit(dateForm)" #dateForm="ngForm">
+            <div class="row mb-5">
+                <div class="col">
+                    <label for="datepicker">Datum för arbetspass</label>
+                    <input class="input" placeholder="Välj ett datum" ngx-mydatepicker name="datepicker" required
+                        [(ngModel)]="model" [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" (click)="dp.toggleCalendar()" />
+                    <small id="dateHelp" class="form-text light-text">Inte arbetspass för dagen? Klicka på inmatningsfältet för att ändra datum.</small>
+                </div>
+                <div>
+                <div class="col">
+                    <label for="startTimeHour">Starttid för arbetspass</label>
+                    <div>
+                        <select class="input w-45 d-inline-block mr-1" name="startTimeHour" id="startTimeHour" [ngModel]="hours[0].value" required>
+                            <option *ngFor="let hour of hours" [ngValue]="hour.value" [disabled]="hour.disabled">{{hour.text}}</option>
+                        </select>
+                        <select class="input w-45 d-inline-block mr-1" name="startTimeMinute" id="startTimeMinute" [ngModel]="minutes[0].value" required>
+                                <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
+                        </select>
+                    </div>
+                </div>             
+                </div>
+                <div class="col">
+                    <label for="startTimeHour">Sluttid för arbetspass</label>
+                    <div>                    
+                        <select class="input w-45 d-inline-block mr-1" name="endTimeHour" id="endTimeHour" [ngModel]="hours[0].value" required>
+                            <option *ngFor="let hour of hours" [ngValue]="hour.value">{{hour.text}}</option>
+                        </select>
+                        <select class="input w-45 d-inline-block" name="endTimeMinute" id="endTimeMinute" [ngModel]="minutes[0].value" required>
+                            <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <button class="btn-primary" type="button" (click)="goBack()">Föregående steg</button>
+                <button class="btn-primary" type="submit" [disabled]="dateForm.invalid">Nästa steg</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <select name="endTimeHour" id="endTimeHour" [ngModel]="hours[0].value" required>
-          <option *ngFor="let hour of hours" [ngValue]="hour.value">{{hour.text}}</option>
-        </select>
-        <select name="endTimeMinute" id="endTimeMinute" [ngModel]="minutes[0].value" required>
-            <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
-        </select>
-      </div>
-      <button type="submit">Nästa steg</button>
-</form>
+</div>

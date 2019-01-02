@@ -1,15 +1,14 @@
-<p *ngIf="currentEmployee">
-    Välkommen {{currentEmployee.name}} {{currentEmployee.username}} {{currentEmployee.id}}
-</p>
-<div *ngIf="assignments">
-    <div *ngFor="let assignment of assignments">
-        <div *ngIf="!backToOverview">
+<app-info-box heading="Välj tjänst" subtext="Välj en tjänst för att sedan lägga till dina timmar"></app-info-box>
+<div class="row justify-content-center" *ngIf="assignments">
+    <div class="col-md-3" *ngFor="let assignment of assignments">
+        <div class="btn-app btn-app-big" *ngIf="!backToOverview">
             <a *ngIf="!assignment.hasTasks" routerLink="{{assignment.id}}/datetime" #a (click)="addTask(a)">{{assignment.name}}</a>
             <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id"  routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
-        <div *ngIf="backToOverview">
+        <div class="btn-app btn-app-big" *ngIf="backToOverview">
             <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{assignment.name}}</a>
             <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
     </div>
 </div>
+

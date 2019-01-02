@@ -17,6 +17,6 @@ export class AdminEmployeeCalculateComponent implements OnInit {
   }
 
   onClick(){
-    this.shiftService.fetchHours().subscribe(employees => {this.employees = employees; console.log(this.employees)});
+    this.shiftService.fetchHours().subscribe(employees => this.employees = employees);
   }
 }

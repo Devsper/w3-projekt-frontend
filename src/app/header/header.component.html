@@ -1,16 +1,16 @@
-<header>
-  <div class="brand">
-    <img src="http://devsper.com/fitness4you/wp-content/uploads/2018/06/logo.png" alt="fitness4yous logotyp">
+<header class="header col-12">
+  <div class="brand col-md-5 mx-auto">
+    <img class="mx-auto d-block" src="http://devsper.com/fitness4you/wp-content/uploads/2018/06/logo.png" alt="fitness4yous logotyp">
   </div>
-  <div *ngIf="isEmployeeLoggedIn" class="nav-container">
-    <nav>
-      <ul>
-        <li><a routerLink="/user/shift/assignments">Nytt skift</a></li>
-        <li><a routerLink="/user/shift/overview">Översikt timmar</a></li>
-        <li><a routerLink="/user/edit/assignments">Redigera tjänster</a></li>
-        <li><a routerLink="/user/edit/tasks">Redigera uppgifter</a></li>
-        <li *ngIf="currentEmployee.isAdmin == 'Y'"><a routerLink="/admin">Administration</a></li>
-        <li><a routerLink="#" (click)="onLogout()">Logga ut</a></li>
+  <div *ngIf="isEmployeeLoggedIn">
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" routerLink="/user/shift/assignments">Nytt skift</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/user/shift/overview">Översikt timmar</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/user/edit/assignments">Redigera tjänster</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/user/edit/tasks">Redigera uppgifter</a></li>
+        <li class="nav-item" *ngIf="currentEmployee.isAdmin == 'Y'"><a class="nav-link" routerLink="/admin">Administration</a></li>
+        <li class="nav-item nav-item-dark"><a class="nav-link" routerLink="#" (click)="onLogout()">Logga ut</a></li>
       </ul>
     </nav>
   </div>

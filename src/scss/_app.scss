@@ -1,0 +1,28 @@
+body{
+    padding-bottom: 50px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.w-45{
+    width: 45%;
+}
+
+.light-text{
+   color: #404040
+}
+
+.text-center{
+    text-align: center;
+}
+
+a{
+    color: $linkColor;
+    text-decoration: underline;
+
+    &:focus, &:hover{
+        color: lighten($linkColor, 5);
+    }
+}
