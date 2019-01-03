@@ -1,11 +1,14 @@
 @mixin btn($bgColor, $textColor){
 
     background-color: $bgColor;
+    // Border darker than background color
     border: 1px solid darken($bgColor, 5);
     color:  $textColor;
     padding: 5px 15px;
 
-    &:focus, &:hover{
+    &:focus, 
+    &:hover{
+        // Make background and border darker on hover
         background-color: darken($bgColor, 5);
         border: 1px solid darken($bgColor, 10);
     }
@@ -17,6 +20,7 @@
 
 @mixin messageBox($color){
 
+    // Lighten background color from base color
     background-color: lighten($color, 55);
     display: block;
     color: $color;

@@ -2,55 +2,84 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Shift } from '../_models/shift';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Employee } from '../_models/employee';
-import { EmployeeService } from '../_services/employee.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShiftService {
 
-  shiftToAdd: Shift;
-  updateShift: boolean = false;
+  currentShift: Shift;
+  updateShift: boolean = false; // Variable to check if shift is currently being updated
   authToken = localStorage.employeeToken;
   private serverUrl = "http://localhost/w3-projekt/app";
 
-  constructor(private http: HttpClient,
-              private employeeService: EmployeeService) {}
+  constructor(private http: HttpClient) {}
 
-  initShift(){
-    this.shiftToAdd = new Shift();
-    this.shiftToAdd.employee_Id = localStorage.employeeId;
+  /**
+   * Initialize a shift for creation
+   * @memberof ShiftService
+   */
+  initShift(): void{
+    this.currentShift = new Shift();
+    this.currentShift.employee_Id = localStorage.employeeId;
     this.updateShift = false;
   }
 
-  getShiftToAdd(){
-    return this.shiftToAdd;
+  /**
+   * Fetches the current shift thats being updated or created
+   * @returns {Shift} - Returns the current shift
+   * @memberof ShiftService
+   */
+  getShift(): Shift{
+    return this.currentShift;
   }
 
-  createShift(){
+  /**
+   * Connects to API and creates a shift
+   * @returns {Observable<boolean>} - Success status
+   * @memberof ShiftService
+   */
+  createShift(): Observable<boolean>{
     
-    let compensateTimeZone = 2;
+    let compensateTimeZone = 2; // Hours to compensate for swedish timezone
     let postUrl = this.serverUrl+"/api/shift.php";
-    let postBody:any = this.shiftToAdd;
+    let postBody:any = this.currentShift; // Data type any to be able to add the auth token
     postBody.token = localStorage.employeeToken;
     // Stringifying dates removes timezone, so have to compensate
     postBody.startTime.setHours(postBody.startTime.getHours()+compensateTimeZone);
     postBody.endTime.setHours(postBody.endTime.getHours()+compensateTimeZone);
 
+    // Connects to API through POST
     return this.http.post(postUrl, JSON.stringify(postBody), {
       headers: new HttpHeaders({"Content-Type": "application/json"}),
       observe: "response"
-      }).pipe(map((data: any) => data.body));
+      }).pipe(map((res: any) => {
+
+        if(res.body.status == 'success'){
+          return true;
+        }
+        
+        return false;
+
+      }));
   }
 
-  fetchShiftsByDate(dateToFetch){
+  /**
+   * Connects to API to fetch all shifts by a specific date
+   * @param {string} dateToFetch - Which date to fetch format yyyy-mm
+   * @returns {Observable<Shift[]>} - All shifts for given date
+   * @memberof ShiftService
+   */
+  fetchShiftsByDate(dateToFetch: string): Observable<Shift[]>{
 
     let getUrl = this.serverUrl+"/api/shift.php";
     let authToken = localStorage.employeeToken;
     let employee_Id = localStorage.employeeId;
 
+    // Connects to API through GET
     return this.http.get(getUrl, { 
       observe: "response",
       params: {token: authToken, date: dateToFetch, employee_Id: employee_Id }
@@ -60,6 +89,7 @@ export class ShiftService {
           let data = res.body.data;
           let shifts: Shift[] = [];
           
+            // Creates shifts from fetched data
             data.forEach((element: Shift) => {
 
               let shift = new Shift(element.id, element.startTime, element.endTime, element.taskName);
@@ -70,27 +100,47 @@ export class ShiftService {
         }));
   }
 
-  isShiftCreationActive(){
+  /**
+   * Checks if a shift is currently being created 
+   * @returns {boolean} - Creation status
+   * @memberof ShiftService
+   */
+  isShiftCreationActive(): boolean{
   
-    if(typeof this.shiftToAdd.taskName !== "undefined"){      
+    if(typeof this.currentShift.taskName !== "undefined"){      
       return true;
     }else{
       return false;
     }
   }
 
-  isShiftBeingUpdated(){
+  /**
+   * Checks if shift is being updated
+   * @returns {boolean} Update status
+   * @memberof ShiftService
+   */
+  isShiftBeingUpdated(): boolean{
     return this.updateShift;
   }
 
-  resetShift(){
-    delete this.shiftToAdd;
+  /**
+   * Resets shift object
+   * @memberof ShiftService
+   */
+  resetShift(): void{
+    delete this.currentShift;
   }
 
-  fetchHours(){
+  /**
+   * Connects to API and fetches an employee and shifts with a accumulation of total hours 
+   * @returns {Observable<Employee[]>} - Returns employees with all shift and hours
+   * @memberof ShiftService
+   */
+  fetchHours(): Observable<Employee[]>{
 
     let calcUrl = this.serverUrl+"/calculate_hours.php";
 
+    // Connects to API through GET
     return this.http.get(calcUrl, { 
       observe: "response",
       params: {token: this.authToken, date: '2018-12'} // Currently hardcoded

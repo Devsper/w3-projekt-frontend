@@ -15,14 +15,15 @@ export class AdminEmployeeOverviewComponent implements OnInit {
   
   constructor(private router: Router,
               private employeeService: EmployeeService) { }
-
+  
+  // Execute code when component initates
   ngOnInit() {
-
-     // Not a secure way to authorize administrator
-     if(localStorage.employeeAdmin == 'N'){
+    // Authorizes employee. Not a secure way to authorize administrator
+    if(localStorage.employeeAdmin == 'N'){
       this.router.navigate(['user/shift/assignments']);
     }
 
+    // Fetches all employees when component initiates
     this.employeeService.fetchAllEmployees().subscribe(employees => this.employees = employees);
   }
 

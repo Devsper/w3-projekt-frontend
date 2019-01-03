@@ -1,7 +1,9 @@
 .message-success{
+    // Mixin
     @include messageBox($successColor);    
 }
 
 .message-danger{
+    // Mixin
     @include messageBox($dangerColor);
 }

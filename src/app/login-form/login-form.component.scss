@@ -1,4 +1,4 @@
-@import 'src/scss/styles';
+@import 'src/scss/_variables';
 
 input.ng-invalid.ng-touched{
     border: 2px solid $warningColor;
@@ -11,4 +11,16 @@ input.ng-invalid.ng-touched{
     background-color: lighten($warningColor, 50);
     padding: 5px;
     margin: 5px 0;
+}
+
+.list{
+    margin: 10px 0;
+    padding: 0;
+
+    li{
+        display: inline-block;
+        padding: 10px;
+        border: 1px solid $darkgrey;
+        margin-right: 10px;
+    }
 }

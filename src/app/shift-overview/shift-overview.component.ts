@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { ShiftService } from '../_services/shift.service';
 import { Shift } from '../_models/shift';
-import { EmployeeService } from '../_services/employee.service';
-import { Employee } from '../_models/employee';
 
 @Component({
   selector: 'app-shift-overview',
@@ -13,9 +11,8 @@ import { Employee } from '../_models/employee';
 })
 export class ShiftOverviewComponent implements OnInit {
 
-  shiftToAdd: Shift;
+  currentShift: Shift;
   taskId: number;
-  currentEmployee: Employee;
 
   showShiftsByMonth: boolean = false;
   showShiftToCreate: boolean = false;
@@ -29,6 +26,7 @@ export class ShiftOverviewComponent implements OnInit {
   shifts: Shift[];
 
   optionYears = ["2019", "2018", "2017"]; // Hardcoded
+  // Months to be shown as options
   optionMonths = [
                 {value: "01", label: "Januari"},
                 {value: "02", label: "Februari"},
@@ -45,21 +43,20 @@ export class ShiftOverviewComponent implements OnInit {
                 ];
   
   constructor(private shiftService: ShiftService,
-              private employeeService: EmployeeService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
+  // Execute code when component initates
   ngOnInit() {
 
-    this.currentEmployee = this.employeeService.getCurrentEmployee();
-
+    // If shift is being created
     if(this.router.url === '/user/shift/overview/new'){
       
       if(this.shiftService.isShiftCreationActive()){
         
         this.showShiftToCreate = true;
-        this.shiftToAdd = this.shiftService.getShiftToAdd();
-        this.taskId = this.shiftService.shiftToAdd.relationship_Id;
+        // Fetch the current shift
+        this.currentShift = this.shiftService.getShift();
+        this.taskId = this.shiftService.currentShift.relationship_Id;
       }else{
         this.router.navigate(['/']);
       }
@@ -67,25 +64,37 @@ export class ShiftOverviewComponent implements OnInit {
     }else if(this.router.url === '/user/shift/overview'){
 
       this.showShiftsByMonth = true;
-      let fetchDate = this.formatDate(this.currentYear, this.currentMonth);
+      
+      // Formats the date to be sent to server
+      let fetchDate = this.currentYear +"-"+ this.currentMonth
 
+      // Fetches all shifts by current year and month
       this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts => this.shifts = shifts);
     }
   }
   
+  /**
+   * Attempts to create shift
+   */
   onSubmitShift(){
 
     this.shiftService.createShift().subscribe(res =>{
 
-      if(res.status == "success"){
+      if(res){
+        // Redirects employee if creation successful
         this.router.navigate(['user/shift/success']);
       }
     });
   }
 
+  /**
+   * Fetches shifts by year and month
+   * @param {NgForm} submittedForm - Submitted form
+   */
   onDateSubmit(submittedForm){
     
-    let fetchDate = this.formatDate(submittedForm.value.byYear, submittedForm.value.byMonth);
+    // Formats the date to be sent to server
+    let fetchDate = submittedForm.value.byYear+"-"+submittedForm.value.byMonth;
 
     this.shiftService.fetchShiftsByDate(fetchDate).subscribe(shifts =>{
 
@@ -94,12 +103,10 @@ export class ShiftOverviewComponent implements OnInit {
 
   }
 
+  /**
+   * Change value to indicate shift is being updated
+   */
   onUpdate(){
     this.shiftService.updateShift = true;
-  }
-
-  private formatDate(year, month): string{
-
-    return year+"-"+month;
   }
 }

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { AssignmentService } from '../_services/assignment.service';
 import { TaskService } from '../_services/task.service';
 import { ShiftService } from '../_services/shift.service';
-import { Employee } from '../_models/employee';
 import { Assignment } from '../_models/assignment';
 
 @Component({
@@ -19,28 +18,35 @@ export class ChooseAssignmentComponent implements OnInit {
   constructor(private assignmentService: AssignmentService,
               private taskService: TaskService,
               private shiftService: ShiftService) {}
-
+  
+  // Execute code when component initates
   ngOnInit() {
 
     // Determine if shift is being updated and should go back to overview when changed
     this.backToOverview = this.shiftService.isShiftBeingUpdated();
 
-    // Fetches assignments from service
+    // Fetches assignments from service when component initialises
     this.assignmentService.fetchEmployeeAssignments().subscribe(assignments =>{
       // Fetched assignments
       this.assignments = assignments;
     });
   }
 
+  /**
+   * Adds an assignment to the current shift
+   * @param {HTMLAnchorElement} usedLink - The anchor element that was used
+   * @memberof ChooseAssignmentComponent
+   */
   addTask(usedLink){
     
+    // Initiate new shift if no current shift is found
     if(!this.shiftService.isShiftBeingUpdated()){
       this.shiftService.initShift();
     }
     
-    this.shiftService.shiftToAdd.relationship_Id = usedLink.id || null; 
-    this.shiftService.shiftToAdd.taskName = usedLink.text;
-    this.shiftService.shiftToAdd.shiftType = "assignment";
+    this.shiftService.currentShift.relationship_Id = usedLink.id || null; // id of assignment
+    this.shiftService.currentShift.taskName = usedLink.text; // Fetch name from anchor text
+    this.shiftService.currentShift.shiftType = "assignment";
 
     this.taskService.assignmentId = usedLink.id;
   }

@@ -1,8 +1,12 @@
 <app-info-box heading="Välj arbetsuppgift" subtext="Välj en arbetsuppgift för att sedan lägga till timmar"></app-info-box>
+<!-- Only show elements when tasks has been fetched from server -->
 <div class="row" *ngIf="tasks">
-  <div class="col" *ngFor="let task of tasks">
+  <!-- Creates an element for every task -->
+  <div class="col-md-3" *ngFor="let task of tasks">
     <h3 class="text-center task-heading">{{ task.name }}</h3>
+    <!-- Creates an element for every subtask -->
     <div class="btn-app btn-app-small mb-2"*ngFor="let subtask of task['subtasks']">
+      <!-- Different routes depending if assignment has tasks or not -->
       <a *ngIf="!backToOverview" routerLink="{{subtask.id}}/datetime" #a (click)="addTask(a)">{{subtask.name}}</a>
       <a *ngIf="backToOverview" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{subtask.name}}</a>
     </div>

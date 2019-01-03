@@ -1,7 +1,10 @@
 <header class="header col-12">
   <div class="brand col-md-5 mx-auto">
-    <img class="mx-auto d-block" src="http://devsper.com/fitness4you/wp-content/uploads/2018/06/logo.png" alt="fitness4yous logotyp">
+    <a routerLink="/shift/assignments">
+        <img class="mx-auto d-block" src="http://devsper.com/fitness4you/wp-content/uploads/2018/06/logo.png" alt="fitness4yous logotyp">
+    </a>
   </div>
+  <!-- Only show navigation if employee is logged in -->
   <div *ngIf="isEmployeeLoggedIn">
     <nav class="nav">
       <ul class="nav-list">
@@ -9,6 +12,7 @@
         <li class="nav-item"><a class="nav-link" routerLink="/user/shift/overview">Översikt timmar</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/user/edit/assignments">Redigera tjänster</a></li>
         <li class="nav-item"><a class="nav-link" routerLink="/user/edit/tasks">Redigera uppgifter</a></li>
+        <!-- Only shows admin link employee has the right credentials -->
         <li class="nav-item" *ngIf="currentEmployee.isAdmin == 'Y'"><a class="nav-link" routerLink="/admin">Administration</a></li>
         <li class="nav-item nav-item-dark"><a class="nav-link" routerLink="#" (click)="onLogout()">Logga ut</a></li>
       </ul>

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EmployeeService } from '../_services/employee.service';
-import { ShiftService } from '../_services/shift.service';
-import { Employee } from '../_models/employee';
 
 @Component({
   selector: 'app-login-form',
@@ -12,19 +10,18 @@ import { Employee } from '../_models/employee';
 })
 export class LoginFormComponent implements OnInit{
 
-  username = "mibe";
+  // Starting values of form, easier testing
+  username = "jefr";
   password = "1234";
 
   constructor(private employeeService: EmployeeService,
-              private shiftService: ShiftService,
               private router: Router) {}
 
-
+  // Execute code when component initates  
   ngOnInit() {
 
+    // Checks if employee is already logged in
     if(localStorage.employeeLoggedIn){
-
-      let employee: Employee = this.employeeService.getCurrentEmployee();
       this.router.navigate(['user/shift/assignments']);
     }
   }

@@ -1,3 +1,4 @@
+// All selectors under .nav are nested
 .nav{
     display: flex;
     background-color: $brandColor;
@@ -20,6 +21,7 @@
     }
 
     .nav-item-dark{
+        // Darkens background for item
         background-color: darken($brandColor, 10);
     }
 
@@ -27,7 +29,9 @@
         color: white;
         text-decoration: none;
 
-        &:focus, &:hover{
+        &:focus, 
+        &:hover{
+            // Darken color on focus/hover
             color: darken(white, 10);
             text-decoration: underline;
         }

@@ -1,9 +1,6 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { EmployeeService } from './_services/employee.service';
-import { ShiftService } from './_services/shift.service';
-import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +9,13 @@ import { isUndefined } from 'util';
 })
 export class AppComponent implements OnInit{
 
-  constructor(
-              private employeeService: EmployeeService,
-              private router: Router,
-              private shiftService: ShiftService
-              ){}
-
+  constructor(private employeeService: EmployeeService,
+              private router: Router){}
+  
+  // Execute code when component initates
   ngOnInit(){
 
+    // If user is not logged in send them to login component
     if(!this.employeeService.isLoggedIn()){
       this.router.navigate(['/login']);
     }

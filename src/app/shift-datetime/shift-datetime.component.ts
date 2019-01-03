@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import {INgxMyDpOptions, IMyDateModel} from 'ngx-mydatepicker';
 
@@ -12,6 +12,7 @@ import { ShiftService } from '../_services/shift.service';
 })
 export class ShiftDatetimeComponent implements OnInit {
 
+  // Object of hours available for shift
   hours = [
     {text: "Timme", disabled: true},
     {text: "05", value: 5},{text: "06", value: 6},{text: "07", value: 7},
@@ -22,38 +23,46 @@ export class ShiftDatetimeComponent implements OnInit {
     {text: "20", value: 20},{text: "21", value: 21},{text: "22", value: 22},
   ]
   
+  // Object of minutes available for shift
   minutes = [
     {text: "Minut", disabled: true},
     {text: "00", value: 0},{text: "15", value: 15},
     {text: "30", value: 30},{text: "45", value: 45}
   ];
 
+  // Initiates datepicker from ngx-mydatepicker
   datePickerOptions: INgxMyDpOptions = {
-    
     dateFormat: 'yyyy-mm-dd'
   };
 
   today = new Date();
+  // Creates the model for datepicker
   model: any = { date: { year: this.today.getFullYear(), month: this.today.getMonth()+1, day: this.today.getDate() } };
   
   constructor(private shiftService: ShiftService,
               private route: ActivatedRoute,
               private router: Router,
               private location: Location) { }
-
+  
+  // Execute code when component initates
   ngOnInit() {
 
-    this.shiftService.shiftToAdd.relationship_Id = +this.route.snapshot.paramMap.get("id");
-
+    // Gets the relationship by url parameter
+    this.shiftService.currentShift.relationship_Id = +this.route.snapshot.paramMap.get("id");
   }
 
   // optional date changed callback
   onDateChanged(event: IMyDateModel): void {}
 
+  /**
+   * When form is submitted
+   * @param {NgForm} submittedForm - The form that was sent
+   */
   onSubmit(submittedForm){
     
     if(submittedForm.valid){
       
+      // Add variables from form
       let year = submittedForm.value.datepicker.date.year;
       let month = submittedForm.value.datepicker.date.month-1;
       let day = submittedForm.value.datepicker.date.day;
@@ -62,13 +71,18 @@ export class ShiftDatetimeComponent implements OnInit {
       let endHour = submittedForm.value.endTimeHour;
       let endMinute = submittedForm.value.endTimeMinute;
 
-      this.shiftService.shiftToAdd.startTime = new Date(year, month, day, startHour, startMinute);
-      this.shiftService.shiftToAdd.endTime = new Date(year, month, day, endHour, endMinute);
+      // Create datestamps and add it to current shift
+      this.shiftService.currentShift.startTime = new Date(year, month, day, startHour, startMinute);
+      this.shiftService.currentShift.endTime = new Date(year, month, day, endHour, endMinute);
       
+      // Navigate to next step
       this.router.navigate(['user/shift/overview/new']);
     }
   }
 
+  /**
+   * Goes back to  the last location, not the best solution.
+   */
   goBack(){
     this.location.back();
   }

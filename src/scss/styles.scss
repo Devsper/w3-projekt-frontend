@@ -1,7 +1,9 @@
-@import './variables';
+// Import bootstrap grids
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
 
+// Import custom Sass
+@import './variables';
 @import './_mixins';
 @import './_buttons';
 @import './_messageboxes';

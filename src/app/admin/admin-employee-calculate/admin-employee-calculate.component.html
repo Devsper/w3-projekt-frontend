@@ -1,5 +1,12 @@
 <app-info-box heading="Administration - Jobbtimmar"></app-info-box>
+<div class="row justify-content-center">
+    <div class="message-danger col-md-5">
+        <p class="mb-0">I nuvarande version går det inte hämta timmar från en specifik månad. Datumet är hårdkodat till December 2018</p>
+      </div>
+</div>
+<!-- Only show elements when employees has been fetched from server -->
 <div *ngIf="employees">
+  <!-- Creates a table for each employee -->
   <div *ngFor="let employee of employees">
     <div class="row">
       <h2>{{employee.name}}, ({{employee.username}})</h2>
@@ -13,6 +20,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Loops through each shift as a table row -->
           <tr *ngFor="let shift of employee.shifts">
             <td>{{shift.taskName}}</td>
             <td>{{shift.startTime | date:'d MMMM, y'}}</td>

@@ -1,17 +1,21 @@
+<!-- Show elements when assignments have been fetched and route is /assignments -->
 <div *ngIf="assignmentCheckboxes && activeRoute =='assignments'">
   <app-info-box heading="Anpassa tjänster" subtext="Kryssa i de tjänster du har hos oss"></app-info-box> 
-  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <!-- Assignment form sends sends the form as a local reference -->
+  <form class="col-md-12" (ngSubmit)="onSubmit(form)" #form="ngForm">
     <div class="message-success" *ngIf="showMessage">Dina tjänster har uppdaterats!</div>
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-md-12 mb-3">
         <h3>Tjänster</h3>
       </div>
+      <!-- Creates checkboxes for all assignments -->
       <div class="col-md-3" *ngFor="let checkbox of assignmentCheckboxes">
-        <input #a
+        <!-- Check checkbox if checkbox has an active property -->
+        <input #input
         type="checkbox" [attr.checked]="checkbox.active ? 'checked' : null" 
         name="isActive-{{checkbox.id}}"
         id="assignment-{{checkbox.id}}"
-        [ngModel]="checkbox.active ? true : false" (ngModelChange)="onChange(a)">
+        [ngModel]="checkbox.active ? true : false" (ngModelChange)="onChange(input)">
         <label class="ml-2" for="assignment-{{checkbox.id}}">{{checkbox.name}}</label>
       </div>
     </div>
@@ -19,20 +23,25 @@
   </form>
 </div>
 
+<!-- Show elements when assignments have been fetched and route is /tasks -->
 <div *ngIf="taskCheckboxes && activeRoute =='tasks'"> 
     <app-info-box heading="Anpassa arbetsuppgifter" subtext="Kryssa i de arbetsuppgifter du har hos oss"></app-info-box>
-    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+    <!-- Assignment form sends sends the form as a local reference -->
+    <form class="col-md-12" (ngSubmit)="onSubmit(form)" #form="ngForm">
       <div class="message-success" *ngIf="showMessage">Dina arbetsuppgifter har uppdaterats!</div>
       <div class="row">
           <div class="col-md-2" *ngFor="let assignment of taskCheckboxes">
               <h3>{{assignment.name}}</h3>
+              <!-- Show message if there are no tasks -->
               <div *ngIf="assignment.tasks.length == 0">Inga uppgifter tillgängliga</div>
+              <!-- Creates checkboxes for all tasks -->
               <div *ngFor="let task of assignment.tasks">
-                    <input #a
+                    <!-- Check checkbox if checkbox has an active property -->
+                    <input #input
                     type="checkbox" [attr.checked]="task.active ? 'checked' : null" 
                     name="isActive-{{task.id}}"
                     id="task-{{task.id}}"
-                    [ngModel]="task.active ? true : false" (ngModelChange)="onChange(a)">
+                    [ngModel]="task.active ? true : false" (ngModelChange)="onChange(input)">
                     <label class="ml-2" for="task-{{task.id}}">{{task.name}}</label>
               </div>
           </div>

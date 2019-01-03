@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class InfoBoxComponent implements OnInit {
 
+  // Input values fetched from component element 
+  // example: <app-info-box heading="myHeading" subtext="mySubtext"></app-info-box>
   @Input() heading: string;
   @Input() subtext: string;
 

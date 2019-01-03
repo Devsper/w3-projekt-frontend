@@ -1,10 +1,12 @@
 <app-info-box heading="Datum & Tid" subtext="Lägg till datum och tid för det avklarade arbetspasset"></app-info-box>
-<div class="row">
+<div class="row justify-content-center">
     <div>
+        <!-- Date form sends sends the form as a local reference -->
         <form (ngSubmit)="onSubmit(dateForm)" #dateForm="ngForm">
             <div class="row mb-5">
                 <div class="col">
                     <label for="datepicker">Datum för arbetspass</label>
+                    <!-- Third party datepicker -->
                     <input class="input" placeholder="Välj ett datum" ngx-mydatepicker name="datepicker" required
                         [(ngModel)]="model" [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" (click)="dp.toggleCalendar()" />
                     <small id="dateHelp" class="form-text light-text">Inte arbetspass för dagen? Klicka på inmatningsfältet för att ändra datum.</small>
@@ -13,10 +15,14 @@
                 <div class="col">
                     <label for="startTimeHour">Starttid för arbetspass</label>
                     <div>
+                        <!-- Select box displays an initial text value -->
                         <select class="input w-45 d-inline-block mr-1" name="startTimeHour" id="startTimeHour" [ngModel]="hours[0].value" required>
+                            <!-- Creates a option element for every value -->
                             <option *ngFor="let hour of hours" [ngValue]="hour.value" [disabled]="hour.disabled">{{hour.text}}</option>
                         </select>
+                        <!-- Select box displays an initial text value -->
                         <select class="input w-45 d-inline-block mr-1" name="startTimeMinute" id="startTimeMinute" [ngModel]="minutes[0].value" required>
+                            <!-- Creates a option element for every value -->
                                 <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
                         </select>
                     </div>
@@ -24,11 +30,15 @@
                 </div>
                 <div class="col">
                     <label for="startTimeHour">Sluttid för arbetspass</label>
-                    <div>                    
+                    <div>
+                        <!-- Select box displays an initial text value -->                    
                         <select class="input w-45 d-inline-block mr-1" name="endTimeHour" id="endTimeHour" [ngModel]="hours[0].value" required>
+                            <!-- Creates a option element for every value -->
                             <option *ngFor="let hour of hours" [ngValue]="hour.value">{{hour.text}}</option>
                         </select>
+                        <!-- Select box displays an initial text value -->
                         <select class="input w-45 d-inline-block" name="endTimeMinute" id="endTimeMinute" [ngModel]="minutes[0].value" required>
+                            <!-- Creates a option element for every value -->
                             <option *ngFor="let minute of minutes" [ngValue]="minute.value" [disabled]="minute.disabled">{{minute.text}}</option>
                         </select>
                     </div>

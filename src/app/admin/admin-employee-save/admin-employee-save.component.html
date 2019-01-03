@@ -1,10 +1,14 @@
 <app-info-box heading="Administration - Redigera anställd"></app-info-box>
+<!-- Only show elements when employees has been fetched from server -->
 <div *ngIf="employee">
     <div class="row justify-content-center">
+        <!-- Messages -->
         <div class="message-success col-md-10" *ngIf="success && !deleted">Anställd har uppdaterats</div>
         <div class="message-danger col-md-10" *ngIf="deleted">Anställd har raderats</div>
     </div>
+    <!-- Edit form sends sends the form as a local reference -->
     <form (ngSubmit)="onSubmit(editForm, 'isEdit')" #editForm="ngForm" id="editForm">
+        <!-- If employee gets deleted disable form -->
         <fieldset [disabled]="deleted">
             <div class="row justify-content-center">
                 <div class="col-md-2">
@@ -28,6 +32,7 @@
                 </div>
                 <input type="hidden" ngModel [ngModel]="employee.id" id="id" name="id">
                 <div class="col-md-10">
+                    <!-- Button is disabled until form is valid -->
                     <button class="btn-primary" type="submit" [disabled]="editForm.invalid">Spara</button>
                 </div>
             </div>
@@ -35,8 +40,10 @@
       </form>
 </div>
 
+<!-- Shows if an employee has NOT been fetched -->
 <div *ngIf="!employee">
     <div class="message-success" *ngIf="success">Anställd har lagts till</div>
+    <!-- Creation form sends sends the form as a local reference -->
     <form (ngSubmit)="onSubmit(createForm, 'isCreate')" #createForm="ngForm">
         <div class="row">
             <div class="col-md-3">
@@ -56,6 +63,7 @@
                 <input class="input" type="text" id="employeeNr" ngModel name="employeeNr" required>
             </div>
         </div>
+        <!-- Button is disabled until form is valid -->
         <button class="btn-primary" type="submit" [disabled]="createForm.invalid || success">Lägg till anställd</button>
       </form>
 </div>

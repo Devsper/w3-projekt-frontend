@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import {NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { EmployeeService } from '../../_services/employee.service';
 import { Employee } from '../../_models/employee';
-import { log } from 'util';
 
 @Component({
   selector: 'app-admin-employee-save',
@@ -15,20 +17,34 @@ export class AdminEmployeeSaveComponent implements OnInit {
   success: boolean = false;
   deleted: boolean = false;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private employeeService: EmployeeService) { }
-
+  
+  // Execute code when component initates
   ngOnInit() {
+
+    // Authorizes employee. Not a secure way to authorize administrator
+    if(localStorage.employeeAdmin == 'N'){
+      this.router.navigate(['user/shift/assignments']);
+    }
     
+    // Fetches employee id from URL
     let employeeId = this.route.snapshot.paramMap.get("id");
 
+    // Fetch employee if id is present
     if(employeeId){
       this.employeeService.fetchSingleEmployee(employeeId).subscribe(employee => this.employee = employee);
     }
   }
 
-  onSubmit(submittedForm, formType){
+  /**
+   * Attempts to submit form to service
+   * @param {NgForm} submittedForm - Form that has been submitted
+   * @param {string} formType - Which form that has been submitted
+   * @memberof AdminEmployeeSaveComponent
+   */
+  onSubmit(submittedForm: NgForm, formType: string){
 
     if(submittedForm.valid && !this.deleted){
 
@@ -42,17 +58,24 @@ export class AdminEmployeeSaveComponent implements OnInit {
       saveEmployee.employeeNr = values.employeeNr;
 
       if(formType == 'isEdit'){
-        
+        // Updates employee
         saveEmployee.id = values.id;
         this.employeeService.editEmployee(saveEmployee).subscribe(success => this.success = success);
       }else{
+        // Creates employee
         this.employeeService.createEmployee(saveEmployee).subscribe(success => this.success = success);
       }
     }
   }
 
+  /**
+   * Attempts to delete employee 
+   * @param {MouseEvent} e - Click event
+   * @memberof AdminEmployeeSaveComponent
+   */
   onDelete(e){
 
+    // Prevents submission of form
     e.preventDefault();
 
     if (confirm('Är du säker att du vill ta bort anställd?')) {

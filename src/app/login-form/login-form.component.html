@@ -1,7 +1,18 @@
+<h1 class="d-flex justify-content-center my-5">Tidsrapportering</h1>
+<!-- Only for testing purposes would not be in final product -->
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <p class="mb-0">Användare för applikationen (Användarnamn / Lösenord):</p>
+        <ul class="list">
+          <li>mibe / 1234 (admin)</li>
+          <li>jefr / 1234 (admin)</li>
+          <li>trit / 1234</li>
+        </ul>
+      </div>
+</div>
 <div class="col-md-5 mx-auto">
-  <h1 class="d-flex justify-content-center my-5">Tidsrapportering</h1>
-  <!-- Makes Angular handle submitted form -->
-  <!-- # Creates a local reference to the HTML of the form -->
+  
+  <!-- Login form sends sends the form as a local reference -->
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
     <label for="username">Användarnamn</label>
     <input 
@@ -14,6 +25,7 @@
     #nameCtrl="ngModel"
     [(ngModel)]="username"
     >
+    <!-- Shows message if input is invalid -->
     <span class="danger" *ngIf="nameCtrl.invalid && nameCtrl.touched">Var god och skriv in ditt användarnamn</span>
     <label for="password">Lösenord</label>
     <input 
@@ -26,6 +38,7 @@
     #passCtrl="ngModel"
     [(ngModel)]="password"
     >
+    <!-- Shows message if input is invalid -->
     <span class="message-danger" *ngIf="passCtrl.invalid && passCtrl.touched">Var god och skriv in ditt lösenord</span>
 
     <button type="submit" class="btn-primary" [disabled]="form.invalid">Logga in</button>

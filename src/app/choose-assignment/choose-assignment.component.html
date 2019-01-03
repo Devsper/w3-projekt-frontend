@@ -1,11 +1,17 @@
 <app-info-box heading="Välj tjänst" subtext="Välj en tjänst för att sedan lägga till dina timmar"></app-info-box>
+<!-- Only show elements when assignments has been fetched from server -->
 <div class="row justify-content-center" *ngIf="assignments">
+    <!-- Creates an element for every assignment -->
     <div class="col-md-3" *ngFor="let assignment of assignments">
+        <!-- Back to overview checks if shift is being updated -->
         <div class="btn-app btn-app-big" *ngIf="!backToOverview">
+            <!-- Different routes depending if assignment has tasks or not -->
             <a *ngIf="!assignment.hasTasks" routerLink="{{assignment.id}}/datetime" #a (click)="addTask(a)">{{assignment.name}}</a>
             <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id"  routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>
+        <!-- Back to overview checks if shift is being updated -->
         <div class="btn-app btn-app-big" *ngIf="backToOverview">
+            <!-- Different routes depending if assignment has tasks or not -->
             <a *ngIf="!assignment.hasTasks" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{assignment.name}}</a>
             <a *ngIf="assignment.hasTasks" [attr.id]="assignment.id" routerLink="/user/shift/subtasks" #a (click)="addTask(a)">{{assignment.name}}</a>
         </div>

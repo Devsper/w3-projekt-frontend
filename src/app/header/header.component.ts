@@ -8,7 +8,7 @@ import { Employee } from '../_models/employee';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   
   subscription: Subscription;
   currentEmployee: Employee;
@@ -16,8 +16,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService) { }
 
+  // Execute code when component initates
   ngOnInit() {
     
+    // Creates a subsciption that listens to login status changes
     this.subscription = this.employeeService.listenToLoginStatus().subscribe((loginStatus) => {
       
       this.isEmployeeLoggedIn = loginStatus
@@ -25,13 +27,19 @@ export class HeaderComponent implements OnInit {
     } );
     
     this.currentEmployee = this.employeeService.getCurrentEmployee();
+    // Checks if employee is already logged in
     this.isEmployeeLoggedIn = this.employeeService.isLoggedIn();
   }
   
+  // Execute code when component is destroyed
   ngOnDestroy(){
+    // Unsubscribes subscription will prevent memory leaks
     this.subscription.unsubscribe();
   }
 
+  /**
+   * When employee logs out
+   */
   onLogout(){
     this.employeeService.logout().subscribe(() => this.employeeService.employeeLoggedIn = false);
   }

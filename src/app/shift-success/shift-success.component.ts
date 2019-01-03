@@ -12,17 +12,20 @@ import { Employee } from '../_models/employee';
 export class ShiftSuccessComponent implements OnInit {
 
   date: Date;
-  currentEmployee: Employee;
-
   constructor(private shiftService: ShiftService,
               private employeeService: EmployeeService) { }
 
+  // Execute code when component initates
   ngOnInit() {
-    this.date = this.shiftService.shiftToAdd.startTime;
-    this.currentEmployee = this.employeeService.currentEmployee;
+    // Fetches date for current shift
+    this.date = this.shiftService.currentShift.startTime;
+    // Resets shift object
     this.shiftService.resetShift();
   }
 
+  /**
+   * Logs out the employee
+   */
   onLogout(){
     this.employeeService.logout().subscribe();
   }
