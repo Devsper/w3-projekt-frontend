@@ -18,8 +18,8 @@
           {{currentShift.taskName}}
           <div class="mt-3">
             <!-- Links to edit shift different urls depending of type -->
-            <a *ngIf="currentShift.shiftType == 'subtask'" routerLink="/user/shift/subtasks/{{taskId}}/datetime">Ändra tid & datum</a>
-            <a *ngIf="currentShift.shiftType == 'assignment'" routerLink="/user/shift/assignments/{{taskId}}/datetime">Ändra tid & datum</a>
+            <a *ngIf="currentShift.shiftType == 'subtask'" routerLink="/user/shift/subtasks" (click)="onUpdate()">Ändra uppgift</a>
+            <a *ngIf="currentShift.shiftType == 'assignment'" routerLink="/user/shift/assignments" (click)="onUpdate()">Ändra uppgift</a>
           </div>
         </td>
         <td>
@@ -27,8 +27,8 @@
           {{currentShift.startTime | date:'d MMMM, y'}}
           <div class="mt-3">
             <!-- Links to edit shift different urls depending of type -->
-            <a *ngIf="currentShift.shiftType == 'subtask'" routerLink="/user/shift/subtasks" (click)="onUpdate()">Ändra uppgift</a>
-            <a *ngIf="currentShift.shiftType == 'assignment'" routerLink="/user/shift/assignments" (click)="onUpdate()">Ändra uppgift</a>
+            <a *ngIf="currentShift.shiftType == 'subtask'" routerLink="/user/shift/subtasks/{{taskId}}/datetime">Ändra tid & datum</a>
+            <a *ngIf="currentShift.shiftType == 'assignment'" routerLink="/user/shift/assignments/{{taskId}}/datetime">Ändra tid & datum</a>
           </div>
         </td>
         <!-- Pipe formats the date -->
@@ -45,7 +45,8 @@
 <div *ngIf="showShiftsByMonth">
   <div class="row justify-content-center">
       <div class="message-danger col-md-5">
-          <p class="mb-0">I nuvarande version är årtalen i select boxen hårdkodade.</p>
+          <p>I nuvarande version är årtalen i select boxen hårdkodade.</p>
+          <p class="mb-0">För att testa tidigare månader så finns det tillgängliga under December 2018</p>
         </div>
   </div>
   <!-- Date form sends sends the form as a local reference -->

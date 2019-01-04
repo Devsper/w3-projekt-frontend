@@ -30,7 +30,7 @@ export class TaskService {
       "getData": "employeeTasksSubtasks",  // Value to trigger correct server method
       "token": this.authToken,
       "employee_Id": localStorage.employeeId,
-      "assignment_Id": this.assignmentId
+      "assignment_Id": this.assignmentId // Which assignment relationship
     }
 
     // Connects to API through POST
