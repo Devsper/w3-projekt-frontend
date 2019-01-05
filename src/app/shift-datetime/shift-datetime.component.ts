@@ -56,6 +56,14 @@ export class ShiftDatetimeComponent implements OnInit {
    */
   onSubmit(submittedForm){
     
+    // Validates inputs so all select boxes has a correct value
+    for (let value of Object.values(submittedForm.value)) {
+      
+      if(typeof value == 'undefined'){
+        return;
+      }
+    }
+
     if(submittedForm.valid){
       
       // Add variables from form
