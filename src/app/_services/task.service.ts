@@ -16,7 +16,7 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
-  private serverUrl = 'http://localhost/w3-projekt/app';
+  private serverUrl = 'http://devsper.com/app';
   
   /**
    * Connects to API to fetch tasks and subtasks for a specific employee

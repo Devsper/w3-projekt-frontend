@@ -18,8 +18,7 @@
           {{currentShift.taskName}}
           <div class="mt-3">
             <!-- Links to edit shift different urls depending of type -->
-            <a *ngIf="currentShift.shiftType == 'subtask'" routerLink="/user/shift/subtasks" (click)="onUpdate()">Ändra uppgift</a>
-            <a *ngIf="currentShift.shiftType == 'assignment'" routerLink="/user/shift/assignments" (click)="onUpdate()">Ändra uppgift</a>
+            <a routerLink="/user/shift/assignments" (click)="onUpdate()">Ändra uppgift</a>
           </div>
         </td>
         <td>

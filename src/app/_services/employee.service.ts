@@ -17,7 +17,7 @@ export class EmployeeService {
   // Checks if employee is logged in
   employeeLoggedIn = localStorage.employeeLoggedIn || false;
   authToken = localStorage.employeeToken;
-  private serverUrl = "http://localhost/w3-projekt/app";
+  private serverUrl = "http://devsper.com/app";
 
   constructor(private http: HttpClient,
               private router: Router) {}
@@ -148,8 +148,8 @@ export class EmployeeService {
       map((res: any) => {
 
         let employees: Employee[] = [];
-        let data = <any>res.body;
-        
+        let data: any = Array.from(res.body);
+
         // Creates employees from fetched data
         data.forEach(employee => {
           employees.push(new Employee(employee.username, employee.id, employee.name, employee.isAdmin, employee.employeeNr));
@@ -275,7 +275,6 @@ export class EmployeeService {
     }).pipe(
       map((res: any) =>{
 
-        console.log(res);
         if(res.body.status == 'success'){
           return true;
         }

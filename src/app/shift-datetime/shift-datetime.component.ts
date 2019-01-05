@@ -45,11 +45,7 @@ export class ShiftDatetimeComponent implements OnInit {
               private location: Location) { }
   
   // Execute code when component initates
-  ngOnInit() {
-
-    // Gets the relationship by url parameter
-    this.shiftService.currentShift.relationship_Id = +this.route.snapshot.paramMap.get("id");
-  }
+  ngOnInit() {}
 
   // optional date changed callback
   onDateChanged(event: IMyDateModel): void {}
@@ -74,7 +70,7 @@ export class ShiftDatetimeComponent implements OnInit {
       // Create datestamps and add it to current shift
       this.shiftService.currentShift.startTime = new Date(year, month, day, startHour, startMinute);
       this.shiftService.currentShift.endTime = new Date(year, month, day, endHour, endMinute);
-      
+
       // Navigate to next step
       this.router.navigate(['user/shift/overview/new']);
     }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { ShiftService } from '../_services/shift.service';
 import { EmployeeService } from '../_services/employee.service';
-import { Employee } from '../_models/employee';
 
 @Component({
   selector: 'app-shift-success',

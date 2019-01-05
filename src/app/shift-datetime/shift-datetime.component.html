@@ -8,7 +8,7 @@
                     <label for="datepicker">Datum för arbetspass</label>
                     <!-- Third party datepicker -->
                     <input class="input" placeholder="Välj ett datum" ngx-mydatepicker name="datepicker" required
-                        [(ngModel)]="model" [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" (click)="dp.toggleCalendar()" />
+                        [(ngModel)]="model" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" (click)="dp.toggleCalendar()" />
                     <small id="dateHelp" class="form-text light-text">Inte arbetspass för dagen? Klicka på inmatningsfältet för att ändra datum.</small>
                 </div>
                 <div>

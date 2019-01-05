@@ -10,10 +10,6 @@ import { EmployeeService } from '../_services/employee.service';
 })
 export class LoginFormComponent implements OnInit{
 
-  // Starting values of form, easier testing
-  username = "jefr";
-  password = "1234";
-
   constructor(private employeeService: EmployeeService,
               private router: Router) {}
 

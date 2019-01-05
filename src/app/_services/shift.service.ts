@@ -11,10 +11,10 @@ import { Employee } from '../_models/employee';
 })
 export class ShiftService {
 
-  currentShift: Shift;
+  currentShift: Shift = new Shift();
   updateShift: boolean = false; // Variable to check if shift is currently being updated
   authToken = localStorage.employeeToken;
-  private serverUrl = "http://localhost/w3-projekt/app";
+  private serverUrl = "http://devsper.com/app";
 
   constructor(private http: HttpClient) {}
 
@@ -44,13 +44,12 @@ export class ShiftService {
    */
   createShift(): Observable<boolean>{
     
-    let compensateTimeZone = 2; // Hours to compensate for swedish timezone
     let postUrl = this.serverUrl+"/api/shift.php";
     let postBody:any = this.currentShift; // Data type any to be able to add the auth token
     postBody.token = localStorage.employeeToken;
     // Stringifying dates removes timezone, so have to compensate
-    postBody.startTime.setHours(postBody.startTime.getHours()+compensateTimeZone);
-    postBody.endTime.setHours(postBody.endTime.getHours()+compensateTimeZone);
+    postBody.startTime.setHours(postBody.startTime.getHours() - postBody.startTime.getTimezoneOffset() / 60);
+    postBody.endTime.setHours(postBody.endTime.getHours() - postBody.startTime.getTimezoneOffset() / 60);
 
     // Connects to API through POST
     return this.http.post(postUrl, JSON.stringify(postBody), {
@@ -107,7 +106,7 @@ export class ShiftService {
    */
   isShiftCreationActive(): boolean{
   
-    if(typeof this.currentShift.taskName !== "undefined"){      
+    if(typeof this.currentShift.taskName !== "undefined" || this.currentShift.taskName == ""){      
       return true;
     }else{
       return false;
@@ -129,6 +128,8 @@ export class ShiftService {
    */
   resetShift(): void{
     delete this.currentShift;
+    this.currentShift = new Shift();
+    this.updateShift = false;
   }
 
   /**

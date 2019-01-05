@@ -21,7 +21,6 @@ export class ChooseTaskComponent implements OnInit {
 
   // Execute code when component initates
   ngOnInit() {
-
     // Determine if shift is being updated and should go back to overview when changed
     this.backToOverview = this.shiftService.isShiftBeingUpdated();
     
@@ -29,6 +28,7 @@ export class ChooseTaskComponent implements OnInit {
     this.taskService.fetchTasksSubtasks().subscribe(tasks =>{
       // Fetched tasks
       this.tasks = tasks;
+
     });
   }
 
@@ -41,5 +41,6 @@ export class ChooseTaskComponent implements OnInit {
 
     this.shiftService.currentShift.taskName = usedLink.text; // Fetch name from anchor text
     this.shiftService.currentShift.shiftType = "subtask";
+    this.shiftService.currentShift.relationship_Id = usedLink.id || null;
   }
 }

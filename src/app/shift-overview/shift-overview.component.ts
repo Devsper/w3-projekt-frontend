@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ShiftService } from '../_services/shift.service';
 import { Shift } from '../_models/shift';
@@ -81,6 +81,7 @@ export class ShiftOverviewComponent implements OnInit {
     this.shiftService.createShift().subscribe(res =>{
 
       if(res){
+
         // Redirects employee if creation successful
         this.router.navigate(['user/shift/success']);
       }

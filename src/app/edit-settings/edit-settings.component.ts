@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { AssignmentService } from '../_services/assignment.service';
 import { Assignment } from '../_models/assignment';
@@ -49,7 +49,7 @@ export class EditSettingsComponent implements OnInit {
   /**
    * Fetches assignments and determine if they should be active or not
    */
-  getAssignmentCheckboxValues(){
+  getAssignmentCheckboxValues(): void{
 
     // Fetches all assignments
     let  allAssignments = this.assignmentService.fetchAllAssignments();
@@ -84,7 +84,7 @@ export class EditSettingsComponent implements OnInit {
   /**
    * Fetches tasks and determine if they should be active or not
    */
-  private getTaskCheckboxValues(){
+  private getTaskCheckboxValues(): void{
 
     // Fetches all tasks
     let allTasks = this.assignmentService.fetchEmployeeAssignmentTasks();

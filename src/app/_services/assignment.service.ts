@@ -11,7 +11,7 @@ import { Assignment } from '../_models/assignment';
 export class AssignmentService {
 
   authToken = localStorage.employeeToken;
-  private serverUrl = 'http://localhost/w3-projekt/app';
+  private serverUrl = 'http://devsper.com/app';
 
   constructor(private http: HttpClient){}
 

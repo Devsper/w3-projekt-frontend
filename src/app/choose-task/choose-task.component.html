@@ -6,9 +6,9 @@
     <h3 class="text-center task-heading">{{ task.name }}</h3>
     <!-- Creates an element for every subtask -->
     <div class="btn-app btn-app-small mb-2"*ngFor="let subtask of task['subtasks']">
-      <!-- Different routes depending if assignment has tasks or not -->
-      <a *ngIf="!backToOverview" routerLink="{{subtask.id}}/datetime" #a (click)="addTask(a)">{{subtask.name}}</a>
-      <a *ngIf="backToOverview" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{subtask.name}}</a>
+      <!-- Different routes depending if shift is being updated or not -->
+      <a *ngIf="!backToOverview" [attr.id]="subtask.id" routerLink="{{subtask.id}}/datetime" #a (click)="addTask(a)">{{subtask.name}}</a>
+      <a *ngIf="backToOverview" [attr.id]="subtask.id" routerLink="/user/shift/overview/new" #a (click)="addTask(a)">{{subtask.name}}</a>
     </div>
   </div>
 </div>

@@ -44,10 +44,13 @@ export class ChooseAssignmentComponent implements OnInit {
       this.shiftService.initShift();
     }
     
+    // Adds information to register an assignment without subtasks
+    // If subtasks are available this will be overwritten in the next step
     this.shiftService.currentShift.relationship_Id = usedLink.id || null; // id of assignment
     this.shiftService.currentShift.taskName = usedLink.text; // Fetch name from anchor text
     this.shiftService.currentShift.shiftType = "assignment";
 
     this.taskService.assignmentId = usedLink.id;
+
   }
 }
