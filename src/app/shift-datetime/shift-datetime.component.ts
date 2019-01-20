@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import {INgxMyDpOptions, IMyDateModel} from 'ngx-mydatepicker';
 
 import { ShiftService } from '../_services/shift.service';
@@ -40,7 +40,6 @@ export class ShiftDatetimeComponent implements OnInit {
   model: any = { date: { year: this.today.getFullYear(), month: this.today.getMonth()+1, day: this.today.getDate() } };
   
   constructor(private shiftService: ShiftService,
-              private route: ActivatedRoute,
               private router: Router,
               private location: Location) { }
   

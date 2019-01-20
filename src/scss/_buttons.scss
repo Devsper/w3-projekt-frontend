@@ -1,13 +1,22 @@
+%btn-shared{
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+    padding: 5px 15px;
+}
+
 .btn-primary{
+
+    // Gets css from %btn-shared
+    @extend %btn-shared;
     // Mixin
     @include btn($brandColor, white);
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn-danger{
+
+    // Gets css from %btn-shared
+    @extend %btn-shared;
     // Mixin
     @include btn($warningColor, white);
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn-app{

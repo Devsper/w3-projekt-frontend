@@ -178,7 +178,6 @@ export class EmployeeService {
         map((res: any) => {
 
           let body = res.body[0]; 
-
           // Returns employee
           return new Employee(body.username, body.id, body.name, body.isAdmin, body.employeeNr, body.password);
         }));

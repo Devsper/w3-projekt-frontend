@@ -1,9 +1,19 @@
+%message-shared{
+    display: block;
+    padding: 5px 10px;
+    margin: 10px 0;
+}
+
 .message-success{
+    // Gets css from %message-shared
+    @extend %message-shared;
     // Mixin
     @include messageBox($successColor);    
 }
 
 .message-danger{
+    // Gets css from %message-shared
+    @extend %message-shared;
     // Mixin
     @include messageBox($dangerColor);
 }

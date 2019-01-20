@@ -4,7 +4,6 @@
     // Border darker than background color
     border: 1px solid darken($bgColor, 5);
     color:  $textColor;
-    padding: 5px 15px;
 
     &:focus, 
     &:hover{
@@ -22,9 +21,7 @@
 
     // Lighten background color from base color
     background-color: lighten($color, 55);
-    display: block;
     color: $color;
     border: 1px solid $color;
-    padding: 5px 10px;
-    margin: 10px 0;
+
 }

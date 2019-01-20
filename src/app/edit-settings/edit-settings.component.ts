@@ -93,10 +93,10 @@ export class EditSettingsComponent implements OnInit {
 
     // Joins two Obserables together and executes logic when both has responded with values
     forkJoin([allTasks, activeTasks]).subscribe(result =>{
-    
+      
       let allTasks = result[0];
       let activeTasks = result[1];
-      
+
       // Goes through every assignment
       this.taskCheckboxes = allTasks.map(element =>{ 
 
